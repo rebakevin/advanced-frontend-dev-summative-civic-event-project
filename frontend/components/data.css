@@ -1,0 +1,188 @@
+/*
+ * Data components: card, stat, tabs, notification item, table, pagination, card grid.
+ *
+ * Event card:
+ *   <article class="card"><div class="card-img"><img src alt=""><span class="card-tag">Community</span></div>
+ *     <div class="card-body"><h3 class="card-title">Title</h3><p class="card-meta">Sat, 21 Nov</p></div>
+ *     <div class="card-actions"><a class="btn btn-sm btn-ghost">View</a></div></article>
+ *   Plain card: <div class="card card-pad">. Clickable card: add .card-link on the <a> or <article> (tabindex=0); it gets hover + focus ring.
+ * Stat card:    <div class="stat"><span class="stat-n">4</span><span class="stat-l">Upcoming</span></div>   .stat-hl = green highlight
+ * Tabs:         <div role="tablist" class="tabs"><button role="tab" aria-selected="true">All</button> ...</div>
+ * Notification: <li class="notif is-unread"><span class="notif-chip notif-chip-event">EV</span>
+ *                 <div class="notif-body"><p class="notif-title">..</p><p class="notif-text">..</p><time class="notif-time">..</time></div>
+ *                 <span class="notif-dot" aria-hidden="true"></span></li>      (is-unread removed once read)
+ * Table:        <div class="table-wrap"><table class="table"><thead><tr><th scope="col">..</th></tr></thead>
+ *                 <tbody><tr><td>..</td><td class="table-actions">buttons</td></tr></tbody></table></div>   .table-zebra optional
+ * Pagination:   <nav class="pagination" aria-label="Pagination"><button class="page-btn">Prev</button>
+ *                 <button class="page-btn" aria-current="page">1</button> ...</nav>
+ * Grid:         <div class="grid-cards"> (1 col mobile, 2 tablet, 3 desktop)
+ */
+
+@layer components {
+  /* Card */
+  .card {
+    @apply flex flex-col overflow-hidden rounded-card border border-border bg-surface shadow-card;
+  }
+  .card-pad {
+    @apply p-5;
+  }
+  .card-img {
+    @apply relative h-40 flex-none overflow-hidden bg-blue;
+  }
+  .card-img img {
+    @apply h-full w-full object-cover;
+  }
+  .card-tag {
+    @apply absolute left-3 top-3 rounded-pill border border-ink bg-surface px-2.5 py-0.5 font-mono text-2xs font-medium uppercase tracking-[0.06em];
+  }
+  .card-body {
+    @apply flex flex-1 flex-col gap-2 p-4;
+  }
+  .card-title {
+    @apply font-display text-xl font-semibold leading-[1.15];
+  }
+  .card-meta {
+    @apply m-0 text-sm text-muted;
+  }
+  .card-actions {
+    @apply flex flex-wrap items-center gap-2 px-4 pb-4;
+  }
+  .card-link {
+    @apply cursor-pointer transition-shadow hover:border-ink;
+  }
+  .card-link:focus-visible {
+    @apply outline outline-[3px] outline-offset-2 outline-ink;
+  }
+
+  /* Stat card */
+  .stat {
+    @apply flex flex-col gap-1 rounded-xl border border-border bg-surface px-5 py-[18px];
+  }
+  .stat-n {
+    @apply font-display text-4xl font-semibold leading-none tracking-[-0.03em];
+  }
+  .stat-l {
+    @apply font-mono text-xs font-medium uppercase tracking-[0.08em] text-muted;
+  }
+  .stat-hl {
+    @apply border-green bg-green;
+  }
+  .stat-hl .stat-l {
+    @apply text-ink;
+  }
+
+  /* Tabs */
+  .tabs {
+    @apply flex flex-wrap gap-2;
+  }
+  .tabs [role='tab'] {
+    @apply min-h-[44px] cursor-pointer rounded-pill border border-ink bg-transparent px-[18px] font-mono text-xs font-medium uppercase tracking-[0.08em] text-ink;
+  }
+  .tabs [role='tab']:hover {
+    @apply bg-surface;
+  }
+  .tabs [role='tab'][aria-selected='true'] {
+    @apply bg-ink text-white;
+  }
+  .tabs [role='tab']:focus-visible {
+    @apply outline outline-[3px] outline-offset-2 outline-ink;
+  }
+
+  /* Notification item: unread is a dot + tinted row, read is plain */
+  .notif {
+    @apply flex items-start gap-3.5 border-b border-[#E1E2DC] bg-surface px-5 py-4;
+  }
+  .notif.is-unread {
+    @apply bg-[#FFFBEF];
+  }
+  .notif-chip {
+    @apply grid h-10 w-10 flex-none place-items-center rounded-full bg-ink font-mono text-13 font-semibold text-white;
+  }
+  .notif-chip-event {
+    @apply bg-blue;
+  }
+  .notif-chip-announcement {
+    @apply bg-orange text-ink;
+  }
+  .notif-chip-promo {
+    @apply bg-yellow text-ink;
+  }
+  .notif-chip-system {
+    @apply bg-dark;
+  }
+  .notif-body {
+    @apply min-w-0 flex-1;
+  }
+  .notif-title {
+    @apply m-0 font-medium;
+  }
+  .notif.is-unread .notif-title {
+    @apply font-semibold;
+  }
+  .notif-text {
+    @apply m-0 text-sm text-muted;
+  }
+  .notif-time {
+    @apply mt-1 block font-mono text-xs text-muted;
+  }
+  .notif-dot {
+    @apply mt-1.5 hidden h-2.5 w-2.5 flex-none rounded-full border-2 border-ink bg-orange;
+  }
+  .notif.is-unread .notif-dot {
+    @apply block;
+  }
+
+  /* Table: the wrapper scrolls sideways, never the page */
+  .table-wrap {
+    @apply max-w-full overflow-x-auto rounded-lg border border-border bg-surface;
+  }
+  .table {
+    @apply w-full min-w-[640px] border-collapse text-sm;
+  }
+  .table th {
+    @apply whitespace-nowrap bg-surface-2 px-3.5 py-3 text-left font-mono text-xs font-medium uppercase tracking-[0.08em] text-muted;
+  }
+  .table td {
+    @apply border-b border-[#E1E2DC] px-3.5 py-2.5 align-middle;
+  }
+  .table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+  .table tbody tr:hover {
+    @apply bg-surface-2;
+  }
+  .table-zebra tbody tr:nth-child(even) {
+    @apply bg-bg-soft;
+  }
+  .table-actions {
+    @apply whitespace-nowrap text-right;
+  }
+  .table-actions > * + * {
+    @apply ml-2;
+  }
+
+  /* Pagination */
+  .pagination {
+    @apply flex flex-wrap items-center justify-center gap-2;
+  }
+  .page-btn {
+    @apply inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-pill border border-ink bg-transparent px-3 font-mono text-xs font-medium uppercase tracking-[0.08em] text-ink;
+  }
+  .page-btn:hover:not(:disabled) {
+    @apply bg-surface;
+  }
+  .page-btn[aria-current='page'] {
+    @apply bg-ink text-white;
+  }
+  .page-btn:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+  .page-btn:focus-visible {
+    @apply outline outline-[3px] outline-offset-2 outline-ink;
+  }
+
+  /* Responsive card grid: 1 / 2 / 3 columns */
+  .grid-cards {
+    @apply grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3;
+  }
+}
