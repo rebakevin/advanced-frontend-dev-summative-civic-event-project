@@ -1,0 +1,61 @@
+/** Design tokens come from docs/design-system.html. */
+module.exports = {
+  content: ['./index.html', './pages/**/*.html', './components/**/*.html', './js/**/*.js'],
+  theme: {
+    extend: {
+      colors: {
+        bg: '#DEDFD8',
+        'bg-soft': '#E9EAE4',
+        surface: { DEFAULT: '#FFFFFF', 2: '#F3F4F0' },
+        ink: '#111111',
+        muted: '#464950',
+        line: '#9AA3B5',
+        border: '#C4C6BE',
+        'field-border': '#6E7380',
+        dark: { DEFAULT: '#202124', 2: '#2D2F33' },
+        'on-dark-muted': '#C9CBC4',
+        orange: { DEFAULT: '#F55F10', deep: '#B03A00' },
+        yellow: { DEFAULT: '#F8AC17', tint: '#FFF0CC', text: '#6B4400' },
+        green: { DEFAULT: '#2DB84B', deep: '#146B28', tint: '#DDF4E2' },
+        blue: { DEFAULT: '#1F4FD8', deep: '#173BA8', tint: '#E1E9FF' },
+        red: { DEFAULT: '#B3261E', tint: '#FBE3E0' },
+        'focus-on-dark': '#FFD25E',
+      },
+      fontFamily: {
+        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        sans: ['"Instrument Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+      },
+      fontSize: {
+        '2xs': ['11px', '1.4'],
+        xs: ['12px', '1.4'],
+        '13': ['13px', '1.45'],
+        sm: ['14px', '1.5'],
+        '15': ['15px', '1.5'],
+        base: ['16px', '1.55'],
+        '17': ['17px', '1.5'],
+        xl: ['20px', '1.3'],
+        '2xl': ['26px', '1.2'],
+        '4xl': ['36px', '1.1'],
+        '5xl': ['48px', '1.05'],
+      },
+      // Named so Tailwind's default numeric spacing scale stays intact: p-s5, gap-s3, ...
+      spacing: { s1: '4px', s2: '8px', s3: '12px', s4: '16px', s5: '24px', s6: '32px', s7: '48px', s8: '64px' },
+      borderRadius: {
+        sm: '8px',
+        md: '14px',
+        lg: '16px',
+        xl: '20px',
+        card: '24px',
+        modal: '28px',
+        pill: '999px',
+      },
+      boxShadow: {
+        card: '0 1px 0 rgba(17,17,17,0.06), 0 8px 24px -12px rgba(17,17,17,0.18)',
+        modal: '0 24px 60px rgba(0,0,0,0.35)',
+        toast: '0 10px 30px rgba(0,0,0,0.35)',
+      },
+    },
+  },
+  plugins: [],
+};

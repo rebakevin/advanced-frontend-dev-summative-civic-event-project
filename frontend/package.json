@@ -1,0 +1,19 @@
+{
+  "name": "civic-events-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CivicEvents frontend: HTML, Tailwind CSS and jQuery",
+  "scripts": {
+    "css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
+    "build": "node build-site.js && npm run css",
+    "dev": "node build-site.js --watch & tailwindcss -i ./src/input.css -o ./dist/styles.css --watch"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "chart.js": "^4.6.1",
+    "jquery": "^3.8.0"
+  }
+}
