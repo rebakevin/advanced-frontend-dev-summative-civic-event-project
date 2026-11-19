@@ -1,34 +1,25 @@
 (function () {
   window.App = window.App || {};
 
-  var POLICY_MESSAGE = 'Use at least 8 characters with upper and lower case letters, a number and a special character.';
+  var V = App.validate.rules;
 
   function initSignup() {
     var $form = $('#signup-form');
     if (!$form.length) return;
 
-    var rules = {
-      full_name: [function (v) { return $.trim(v) ? '' : 'Full name is required.'; }],
-      email: [
-        function (v) { return App.validate.required(v) ? '' : 'Email is required.'; },
-        function (v) { return App.validate.email(v) ? '' : 'Enter a valid email address.'; },
-      ],
-      password: [
-        function (v) { return App.validate.required(v) ? '' : 'Password is required.'; },
-        function (v) { return App.validate.passwordPolicy(v) ? '' : POLICY_MESSAGE; },
-      ],
-      confirm_password: [
-        function (v) { return App.validate.required(v) ? '' : 'Confirm your password.'; },
-        function (v, all) { return App.validate.matches(all.password, v) ? '' : 'Passwords do not match.'; },
-      ],
+    var formRules = {
+      full_name: [V.required('Full name is required')],
+      email: [V.required('Email is required'), V.email()],
+      password: [V.required('Password is required'), V.password()],
+      confirm_password: [V.required('Confirm your password'), V.matches('password')],
     };
 
-    App.validate.bindLive($form, rules);
+    App.validate.bindLive($form, formRules);
     App.validate.bindStrengthMeter($('#password'), $('#password-strength'), $('#password-strength-label'));
 
     $form.on('submit', function (e) {
       e.preventDefault();
-      var result = App.validate.form($form, rules);
+      var result = App.validate.form($form, formRules);
       if (!result.valid) return;
 
       var $btn = $form.find('button[type="submit"]');
@@ -67,22 +58,19 @@
     if (!$form.length) return;
 
     var $error = $('#login-error');
-    var rules = {
-      email: [
-        function (v) { return App.validate.required(v) ? '' : 'Email is required.'; },
-        function (v) { return App.validate.email(v) ? '' : 'Enter a valid email address.'; },
-      ],
-      password: [function (v) { return App.validate.required(v) ? '' : 'Password is required.'; }],
+    var formRules = {
+      email: [V.required('Email is required'), V.email()],
+      password: [V.required('Password is required')],
     };
 
-    App.validate.bindLive($form, rules);
+    App.validate.bindLive($form, formRules);
 
     $form.on('submit', function (e) {
       e.preventDefault();
       // The form-level error is cleared on every new attempt.
       $error.prop('hidden', true).text('');
 
-      var result = App.validate.form($form, rules);
+      var result = App.validate.form($form, formRules);
       if (!result.valid) return;
 
       var $btn = $form.find('button[type="submit"]');

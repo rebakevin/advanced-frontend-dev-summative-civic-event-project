@@ -19,8 +19,6 @@
  * Banner: <div class="demo-banner" id="demo-banner" role="status" hidden>..</div>
  */
 @layer components {
-  .site-header [hidden], .demo-banner[hidden] { display: none !important; }
-
   .demo-banner {
     @apply bg-yellow-tint text-yellow-text text-sm text-center;
     font-weight: 600;

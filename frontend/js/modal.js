@@ -2,7 +2,6 @@
   window.App = window.App || {};
 
   var uid = 0;
-  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
   function confirm(opts) {
     opts = opts || {};
@@ -39,21 +38,7 @@
         e.preventDefault();
         close(false);
       } else if (e.key === 'Tab') {
-        var $items = $modal.find(FOCUSABLE).filter(':visible');
-        if (!$items.length) return;
-        var first = $items[0];
-        var last = $items[$items.length - 1];
-        var active = document.activeElement;
-        if (!$.contains($modal[0], active)) {
-          e.preventDefault();
-          first.focus();
-        } else if (e.shiftKey && active === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && active === last) {
-          e.preventDefault();
-          first.focus();
-        }
+        App.ui.trapTab(e, $modal);
       }
     }
 

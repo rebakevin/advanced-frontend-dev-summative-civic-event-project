@@ -15,7 +15,7 @@
 
   // Guests (and public pages like not-found) see only the logo.
   function initGuestState() {
-    var guest = $('body').attr('data-guard') === 'guest' || !App.auth.getToken();
+    var guest = $('body').attr('data-guard') === 'guest' || !App.auth.isLoggedIn();
     if (!guest) return false;
     $('#header-search, #primary-nav, #header-menu, #header-actions, #notif-bell, #profile-dropdown, #nav-toggle').prop('hidden', true);
     $('#notif-drawer, #drawer-backdrop').remove();
@@ -120,14 +120,14 @@
 
   function initBell() {
     $('#notif-bell').on('click', function () {
-      if (App.drawer && typeof App.drawer.toggle === 'function') App.drawer.toggle();
+      App.drawer.toggle();
     });
   }
 
   function initBanner() {
     var $banner = $('#demo-banner');
     if (!$banner.length) return;
-    if (App.config && App.config.USE_MOCK) $banner.prop('hidden', false);
+    if (App.config.USE_MOCK) $banner.prop('hidden', false);
   }
 
   $(function () {

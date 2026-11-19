@@ -45,6 +45,31 @@
     return promise;
   }
 
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  // Keeps Tab / Shift+Tab inside an open overlay. Call it from the overlay's keydown handler.
+  function trapTab(e, $container) {
+    var $items = $container.find(FOCUSABLE).filter(':visible');
+    if (!$items.length) {
+      e.preventDefault();
+      return;
+    }
+    var first = $items[0];
+    var last = $items[$items.length - 1];
+    var active = document.activeElement;
+    if (!$.contains($container[0], active)) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && active === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  App.ui.trapTab = trapTab;
   App.ui.setLoading = setLoading;
   App.ui.isLoading = isLoading;
   App.ui.withLoading = withLoading;

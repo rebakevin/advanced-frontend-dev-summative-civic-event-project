@@ -8,6 +8,7 @@ const ROOT = __dirname;
 const DIST = path.join(ROOT, 'dist');
 const PAGES = path.join(ROOT, 'pages');
 const LAYOUT = path.join(ROOT, 'index.html');
+const SIDEBAR = path.join(ROOT, 'components', 'admin-sidebar.html');
 const WATCH = process.argv.includes('--watch');
 const INCLUDE_RE = /<!--\s*@include\s+(.+?)\s*-->/g;
 
@@ -112,10 +113,9 @@ function build() {
         }).join('\n  ');
       })
       .replace('<!-- @admin-sidebar -->', function () {
-        return meta.sidebar ? '<!-- @include components/admin-sidebar.html -->' : '';
+        return meta.sidebar ? resolveIncludes(read(SIDEBAR), SIDEBAR) : '';
       })
       .replace('<!-- @content -->', function () { return content; });
-    html = resolveIncludes(html, LAYOUT);
     html = fill(html, {
       root: '../',
       title: meta.title || name,
