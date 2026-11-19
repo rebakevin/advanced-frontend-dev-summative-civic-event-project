@@ -1,0 +1,35 @@
+<div class="mx-auto w-full max-w-md px-4 py-10">
+  <h1 class="mb-2">My profile</h1>
+  <p class="mb-6 text-muted">View and update your account details.</p>
+
+  <div id="profile-state" aria-live="polite"></div>
+
+  <div id="profile-body" class="card card-pad" hidden>
+    <dl class="mb-6">
+      <dt class="text-muted">Role</dt>
+      <dd class="mb-2"><span class="badge badge-blue" id="profile-role"></span></dd>
+      <dt class="text-muted">Status</dt>
+      <dd class="mb-2"><span class="badge" id="profile-status"></span></dd>
+      <dt class="text-muted">Member since</dt>
+      <dd id="profile-since"></dd>
+    </dl>
+
+    <form id="profile-form" class="form-stack" novalidate>
+      <div class="field">
+        <label for="full_name">Full name</label>
+        <input id="full_name" name="full_name" type="text" autocomplete="name" aria-describedby="full_name-error" required>
+        <p class="field-error" id="full_name-error" role="alert" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-error" required>
+        <p class="field-error" id="email-error" role="alert" hidden></p>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary w-full" type="submit">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>
