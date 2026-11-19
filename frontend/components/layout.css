@@ -1,0 +1,138 @@
+/*
+ * Layout: header, notification bell, admin sidebar, footer, demo banner.
+ *
+ * Header:
+ *   <header class="site-header dark"><div class="site-header-inner">
+ *     <a class="header-logo">..</a>
+ *     <div class="header-actions"><button class="header-icon-btn">bell + .header-badge</button>
+ *       <div class="dropdown header-profile">..</div><button class="header-toggle">..</button></div>
+ *     <div class="header-menu" id="header-menu"> <form class="header-search">..</form> <nav class="header-nav"><a class="header-link">..</a></nav></div>
+ *   </div></header>
+ *   Below 1024px .header-menu is collapsed; .is-open (set by layout.js) shows it.
+ *   Current page link gets aria-current="page".
+ *
+ * Admin sidebar (body[data-sidebar="true"]):
+ *   <aside id="admin-sidebar" class="admin-sidebar"><nav><a class="sidebar-link">..</a></nav></aside>
+ *   Left column from 1024px, horizontal bar below.
+ *
+ * Footer: <footer class="site-footer dark"><div class="site-footer-inner"><section>..</section></div><p class="footer-copy"></footer>
+ * Banner: <div class="demo-banner" id="demo-banner" role="status" hidden>..</div>
+ */
+@layer components {
+  .site-header [hidden], .demo-banner[hidden] { display: none !important; }
+
+  .demo-banner {
+    @apply bg-yellow-tint text-yellow-text text-sm text-center;
+    font-weight: 600;
+    padding: 8px 16px;
+  }
+
+  /* Header */
+  .site-header { @apply bg-dark text-white relative z-[100]; }
+  .site-header-inner {
+    @apply flex flex-wrap items-center mx-auto;
+    max-width: 1280px;
+    padding: 10px 16px;
+    gap: 8px 12px;
+  }
+  .header-logo { @apply inline-flex items-center text-white no-underline; gap: 10px; min-height: 44px; margin-right: auto; }
+  .header-logo-mark {
+    @apply inline-flex items-center justify-center bg-orange text-white font-display rounded-pill;
+    width: 36px; height: 36px; font-weight: 700;
+  }
+  .header-logo-text { @apply font-display; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; }
+
+  .header-actions { @apply flex items-center; gap: 8px; order: 2; }
+  .header-icon-btn {
+    @apply relative inline-flex items-center justify-center rounded-pill text-white bg-transparent border-0 cursor-pointer;
+    width: 44px; height: 44px;
+  }
+  .header-icon-btn:hover { @apply bg-dark-2; }
+  .header-badge {
+    @apply absolute inline-flex items-center justify-center bg-orange text-white rounded-pill text-2xs;
+    top: 2px; right: 0; min-width: 18px; height: 18px; padding: 0 5px; font-weight: 700;
+  }
+  .header-profile-trigger {
+    @apply text-white bg-transparent border-0 rounded-pill;
+    min-height: 44px; padding: 4px 10px 4px 4px;
+  }
+  .header-profile-trigger:hover, .header-profile-trigger[aria-expanded="true"] { @apply bg-dark-2; }
+  .header-avatar { @apply inline-flex items-center justify-center bg-dark-2 rounded-pill; width: 36px; height: 36px; }
+  .header-user-name { @apply hidden text-sm; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+  .header-caret { @apply hidden; }
+
+  .header-menu { @apply hidden flex-col w-full; order: 3; gap: 12px; padding: 8px 0 12px; }
+  .header-menu.is-open { @apply flex; }
+  .header-search { @apply w-full; }
+  .header-nav { @apply flex flex-col; gap: 4px; }
+  .header-link {
+    @apply flex items-center text-white no-underline rounded-pill;
+    min-height: 44px; padding: 8px 16px; font-weight: 600; font-size: 0.9375rem;
+  }
+  .header-link:hover { @apply bg-dark-2; }
+  .header-link[aria-current="page"] { @apply bg-orange text-white; }
+
+  .site-header a:focus-visible, .site-header button:focus-visible, .site-header input:focus-visible {
+    outline: 3px solid theme('colors.focus-on-dark');
+    outline-offset: 2px;
+  }
+  .site-header .dropdown-menu a:focus-visible, .site-header .dropdown-menu button:focus-visible {
+    outline-color: theme('colors.blue.DEFAULT');
+  }
+
+  @media (min-width: 640px) {
+    .header-user-name, .header-caret { @apply inline; }
+  }
+  @media (min-width: 1024px) {
+    .header-toggle { @apply hidden; }
+    .header-actions { order: 3; }
+    .header-menu { @apply flex flex-row items-center flex-1 w-auto; order: 2; padding: 0; gap: 16px; }
+    .header-search { max-width: 320px; flex: 1 1 200px; }
+    .header-nav { @apply flex-row; }
+    .header-logo { margin-right: 0; }
+  }
+
+  /* Admin sidebar and page grid */
+  .admin-sidebar { @apply bg-surface border-b border-line; }
+  .admin-sidebar nav { @apply flex overflow-x-auto; gap: 8px; padding: 8px 16px; }
+  .sidebar-link {
+    @apply inline-flex items-center flex-shrink-0 text-ink no-underline rounded-pill;
+    min-height: 44px; padding: 8px 16px; font-weight: 600; font-size: 0.9375rem;
+  }
+  .sidebar-link:hover { @apply bg-bg-soft; }
+  .sidebar-link[aria-current="page"] { @apply bg-ink text-white; }
+  .sidebar-link:focus-visible { outline: 3px solid theme('colors.blue.DEFAULT'); outline-offset: 2px; }
+
+  @media (min-width: 1024px) {
+    body[data-sidebar="true"] {
+      @apply grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      grid-template-rows: auto auto auto 1fr auto;
+    }
+    body[data-sidebar="true"] > .demo-banner,
+    body[data-sidebar="true"] > .site-header,
+    body[data-sidebar="true"] > .site-footer { grid-column: 1 / -1; }
+    body[data-sidebar="true"] > .admin-sidebar { grid-column: 1; @apply border-b-0 border-r border-line; }
+    body[data-sidebar="true"] > main { grid-column: 2; min-width: 0; }
+    .admin-sidebar nav { @apply flex-col overflow-visible; padding: 24px 16px; }
+    .sidebar-link { @apply flex; }
+  }
+
+  /* Footer */
+  .site-footer { @apply bg-dark text-on-dark-muted text-sm; margin-top: 48px; }
+  .site-footer-inner {
+    @apply mx-auto grid grid-cols-1;
+    max-width: 1280px; padding: 40px 16px 16px; gap: 28px;
+  }
+  .site-footer-inner p { @apply m-0; }
+  .footer-title { @apply font-display text-white; font-size: 1rem; margin-bottom: 8px; }
+  .site-footer a { @apply text-white underline; }
+  .site-footer a:hover { @apply text-focus-on-dark; }
+  .site-footer a:focus-visible { outline: 3px solid theme('colors.focus-on-dark'); outline-offset: 2px; }
+  .footer-list { @apply list-none m-0 p-0 flex flex-col; gap: 4px; }
+  .footer-list a { @apply inline-flex items-center; min-height: 32px; }
+  .footer-copy { @apply mx-auto m-0 text-xs; max-width: 1280px; padding: 16px 16px 24px; }
+
+  @media (min-width: 640px) { .site-footer-inner { @apply grid-cols-2; } }
+  @media (min-width: 1024px) { .site-footer-inner { @apply grid-cols-4; } }
+}

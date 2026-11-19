@@ -106,12 +106,22 @@ function build() {
       .replace('<!-- @page-css -->', function () {
         return hasCss ? '<link rel="stylesheet" href="{{root}}' + name + '/index.css">' : '';
       })
+      .replace('<!-- @scripts -->', function () {
+        return (meta.scripts || []).map(function (file) {
+          return '<script defer src="{{root}}js/' + file + '"></script>';
+        }).join('\n  ');
+      })
+      .replace('<!-- @admin-sidebar -->', function () {
+        return meta.sidebar ? '<!-- @include components/admin-sidebar.html -->' : '';
+      })
       .replace('<!-- @content -->', function () { return content; });
+    html = resolveIncludes(html, LAYOUT);
     html = fill(html, {
       root: '../',
       title: meta.title || name,
       guard: meta.guard || 'user',
       page: name,
+      sidebar: meta.sidebar ? 'true' : 'false',
     });
 
     const out = path.join(DIST, name);

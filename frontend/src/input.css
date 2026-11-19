@@ -5,6 +5,7 @@
 @import "../components/data.css";
 @import "../components/overlays.css";
 @import "../components/media.css";
+@import "../components/layout.css";
 
 @tailwind base;
 @tailwind components;

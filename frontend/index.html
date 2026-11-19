@@ -15,14 +15,22 @@
   <script defer src="{{root}}js/auth.js"></script>
   <script defer src="{{root}}js/api.js"></script>
   <script defer src="{{root}}js/guard.js"></script>
+  <script defer src="{{root}}js/toast.js"></script>
+  <script defer src="{{root}}js/modal.js"></script>
+  <script defer src="{{root}}js/drawer.js"></script>
+  <script defer src="{{root}}js/skeleton.js"></script>
+  <script defer src="{{root}}js/validate.js"></script>
+  <script defer src="{{root}}js/upload.js"></script>
+  <script defer src="{{root}}js/button.js"></script>
+  <script defer src="{{root}}js/layout.js"></script>
   <!-- @scripts -->
 </head>
-<body class="bg-bg text-ink font-sans" data-guard="{{guard}}" data-page="{{page}}">
+<body class="bg-bg text-ink font-sans" data-guard="{{guard}}" data-page="{{page}}" data-sidebar="{{sidebar}}">
   <a class="skip-link" href="#main">Skip to content</a>
-  <!-- @demo-banner -->
-  <!-- @header -->
+  <!-- @include components/demo-banner.html -->
+  <!-- @include components/header.html -->
   <!-- @admin-sidebar -->
   <main id="main" tabindex="-1"><!-- @content --></main>
-  <!-- @footer -->
+  <!-- @include components/footer.html -->
 </body>
 </html>
