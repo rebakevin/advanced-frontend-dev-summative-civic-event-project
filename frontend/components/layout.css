@@ -130,6 +130,9 @@
   .footer-list { @apply list-none m-0 p-0 flex flex-col; gap: 4px; }
   .footer-list a { @apply inline-flex items-center; min-height: 32px; }
   .footer-copy { @apply mx-auto m-0 text-xs; max-width: 1280px; padding: 16px 16px 24px; }
+  .footer-copy .btn-link { @apply text-white; }
+  .footer-copy .btn-link:hover { @apply text-focus-on-dark; }
+  .footer-copy .btn-link:focus-visible { outline: 3px solid theme('colors.focus-on-dark'); outline-offset: 2px; }
 
   @media (min-width: 640px) { .site-footer-inner { @apply grid-cols-2; } }
   @media (min-width: 1024px) { .site-footer-inner { @apply grid-cols-4; } }

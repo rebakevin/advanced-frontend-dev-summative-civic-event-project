@@ -151,6 +151,7 @@
   .table tbody tr:hover {
     @apply bg-surface-2;
   }
+  .table-compact { @apply min-w-0; }
   .table-zebra tbody tr:nth-child(even) {
     @apply bg-bg-soft;
   }

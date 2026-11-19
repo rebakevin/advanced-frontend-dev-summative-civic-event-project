@@ -52,7 +52,16 @@ function copy(from, to, filter) {
   fs.cpSync(from, to, { recursive: true, filter: filter });
 }
 
-function writeConfig() {
+// Mock mode is on when USE_MOCK=true, or when USE_MOCK is unset and config.js has USE_MOCK: true.
+function isMockOn() {
+  if (process.env.USE_MOCK !== undefined && process.env.USE_MOCK !== '') return process.env.USE_MOCK === 'true';
+  const src = path.join(ROOT, 'config.js');
+  return fs.existsSync(src) && /^\s*USE_MOCK:\s*true\b/m.test(fs.readFileSync(src, 'utf8'));
+}
+
+const MOCK_SCRIPTS = ['store', 'seed', 'transport', 'handlers-users', 'handlers-events', 'handlers-media', 'handlers-notifications', 'demo-ui'];
+
+function writeConfig(useMock) {
   const src = path.join(ROOT, 'config.js');
   if (!fs.existsSync(src)) {
     console.warn('Warning: config.js not found, skipping.');
@@ -64,16 +73,15 @@ function writeConfig() {
       return head + JSON.stringify(process.env.API_BASE_URL) + ',';
     });
   }
-  if (process.env.USE_MOCK) {
-    text = text.replace(/^(\s*USE_MOCK:\s*).*$/m, function (m, head) {
-      return head + (process.env.USE_MOCK === 'true' ? 'true' : 'false') + ',';
-    });
-  }
+  text = text.replace(/^(\s*USE_MOCK:\s*).*$/m, function (m, head) {
+    return head + (useMock ? 'true' : 'false') + ',';
+  });
   fs.writeFileSync(path.join(DIST, 'config.js'), text);
 }
 
 function build() {
   const started = Date.now();
+  const useMock = isMockOn();
   const layoutSource = resolveIncludes(read(LAYOUT), LAYOUT);
   cleanDist();
 
@@ -107,6 +115,11 @@ function build() {
       .replace('<!-- @page-css -->', function () {
         return hasCss ? '<link rel="stylesheet" href="{{root}}' + name + '/index.css">' : '';
       })
+      .replace('<!-- @mock -->', function () {
+        return useMock ? MOCK_SCRIPTS.map(function (file) {
+          return '<script defer src="{{root}}js/mock/' + file + '.js"></script>';
+        }).join('\n  ') : '';
+      })
       .replace('<!-- @scripts -->', function () {
         return (meta.scripts || []).map(function (file) {
           return '<script defer src="{{root}}js/' + file + '"></script>';
@@ -138,13 +151,12 @@ function build() {
       '<body><a href="login/">Continue to CivicEvents</a></body>\n</html>\n'
   );
 
-  const useMock = process.env.USE_MOCK === 'true';
   const mockDir = path.join(ROOT, 'js', 'mock');
   copy(path.join(ROOT, 'js'), path.join(DIST, 'js'), function (src) {
     return useMock || (src !== mockDir && !src.startsWith(mockDir + path.sep));
   });
   copy(path.join(ROOT, 'assets'), path.join(DIST, 'assets'));
-  writeConfig();
+  writeConfig(useMock);
 
   [
     ['node_modules/jquery/dist/jquery.min.js', 'vendor/jquery.min.js'],
