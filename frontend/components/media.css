@@ -1,0 +1,53 @@
+/*
+ * Media: audio player, video player, promo thumbnail, transcript.
+ *
+ * Audio:
+ *   <div class="audio-player">
+ *     <label class="audio-label" for="a1">Title</label>
+ *     <audio id="a1" class="audio-el" controls preload="metadata" src="..">Fallback text</audio>
+ *     <p class="audio-time"><span class="audio-current">0:00</span> / <span class="audio-duration">0:00</span></p>
+ *   </div>
+ *   .audio-fallback is for a visible message when the format is unsupported.
+ *
+ * Video:
+ *   <div class="video-player">
+ *     <div class="video-frame"><video controls preload="metadata" src="..">..</video></div>
+ *     <div class="video-caption">..</div>
+ *   </div>
+ *
+ * Promo card thumbnail (video is the poster, first frame):
+ *   <div class="promo-thumb"><video preload="metadata" muted playsinline src=".."></video><span class="play-badge" aria-hidden="true">..</span></div>
+ *
+ * Transcript:
+ *   <section class="transcript"><h2 class="transcript-title">Transcript</h2><p class="transcript-text">..</p></section>
+ */
+@layer components {
+  .audio-player { @apply bg-dark text-white flex flex-col; border-radius: 24px; padding: 24px; gap: 16px; }
+  .audio-label { @apply font-display text-white; font-size: 1.125rem; font-weight: 700; }
+  .audio-el { @apply w-full block; min-height: 44px; }
+  .audio-el:focus-visible { outline: 3px solid theme('colors.focus-on-dark'); outline-offset: 3px; }
+  .audio-time { @apply font-mono text-on-dark-muted m-0; font-size: 0.875rem; }
+  .audio-fallback { @apply text-on-dark-muted; font-size: 0.875rem; }
+
+  .video-player { @apply flex flex-col; gap: 16px; }
+  .video-frame { @apply relative w-full bg-dark overflow-hidden; aspect-ratio: 16 / 9; border-radius: 24px; }
+  .video-frame video { @apply absolute inset-0 w-full h-full block; object-fit: contain; }
+  .video-frame video:focus-visible { outline: 3px solid theme('colors.focus-on-dark'); outline-offset: -3px; }
+  .video-caption { @apply text-muted; font-size: 0.9375rem; line-height: 1.5; }
+
+  .promo-thumb { @apply relative w-full bg-dark overflow-hidden; aspect-ratio: 16 / 9; border-radius: 16px; }
+  .promo-thumb video, .promo-thumb img { @apply absolute inset-0 w-full h-full block; object-fit: cover; pointer-events: none; }
+  .play-badge {
+    @apply absolute inline-flex items-center justify-center rounded-pill bg-yellow text-ink;
+    top: 50%;
+    left: 50%;
+    width: 56px;
+    height: 56px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .transcript { @apply bg-bg-soft text-ink border border-line; border-radius: 20px; padding: 20px 24px; }
+  .transcript-title { @apply font-display text-ink; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px; }
+  .transcript-text { @apply m-0; font-size: 1rem; line-height: 1.6; white-space: pre-line; max-height: 320px; overflow-y: auto; }
+}
