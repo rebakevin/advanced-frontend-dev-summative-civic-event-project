@@ -1,0 +1,71 @@
+<div class="mx-auto w-full max-w-6xl px-4 py-8">
+  <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="mb-2">Dashboard</h1>
+      <p class="text-muted">Platform totals and activity.</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <p id="dash-updated" class="text-sm text-muted" role="status" aria-live="polite"></p>
+      <button id="dash-refresh" class="btn btn-sm btn-ghost" type="button">Refresh</button>
+    </div>
+  </div>
+
+  <div id="dash-state" aria-busy="true"></div>
+
+  <div id="dash-content" hidden>
+    <section class="mb-8" aria-labelledby="dash-users-h">
+      <h2 id="dash-users-h" class="mb-3 text-xl">Users</h2>
+      <div id="dash-users" class="grid grid-cols-1 gap-4 sm:grid-cols-3"></div>
+    </section>
+
+    <section class="mb-8" aria-labelledby="dash-events-h">
+      <h2 id="dash-events-h" class="mb-3 text-xl">Events</h2>
+      <div id="dash-events" class="grid grid-cols-1 gap-4 sm:grid-cols-3"></div>
+    </section>
+
+    <section class="mb-8" aria-labelledby="dash-content-h">
+      <h2 id="dash-content-h" class="mb-3 text-xl">Content and activity</h2>
+      <div id="dash-activity" class="grid grid-cols-2 gap-4 lg:grid-cols-5"></div>
+    </section>
+
+    <section class="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2" aria-label="Charts">
+      <div class="card">
+        <div class="card-body">
+          <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-xl">User growth, last 6 months</h2>
+            <button class="btn btn-sm btn-ghost" type="button" id="growth-toggle" aria-expanded="false" aria-controls="growth-table-wrap">View as table</button>
+          </div>
+          <div id="growth-chart-wrap" class="relative h-64">
+            <canvas id="growth-chart" role="img" aria-label="User growth chart"></canvas>
+          </div>
+          <div id="growth-table-wrap" class="table-wrap" hidden>
+            <table class="table !min-w-0" id="growth-table">
+              <caption class="sr-only">New users per month, last 6 months</caption>
+              <thead><tr><th scope="col">Month</th><th scope="col">New users</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-xl">Upcoming vs past events</h2>
+            <button class="btn btn-sm btn-ghost" type="button" id="events-toggle" aria-expanded="false" aria-controls="events-table-wrap">View as table</button>
+          </div>
+          <div id="events-chart-wrap" class="relative h-64">
+            <canvas id="events-chart" role="img" aria-label="Events chart"></canvas>
+          </div>
+          <div id="events-table-wrap" class="table-wrap" hidden>
+            <table class="table !min-w-0" id="events-table">
+              <caption class="sr-only">Number of upcoming and past events</caption>
+              <thead><tr><th scope="col">Type</th><th scope="col">Events</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

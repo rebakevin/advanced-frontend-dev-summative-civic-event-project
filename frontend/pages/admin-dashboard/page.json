@@ -1,0 +1,6 @@
+{
+  "title": "Dashboard",
+  "guard": "admin",
+  "sidebar": true,
+  "scripts": ["../vendor/chart.umd.js", "features/admin-dashboard.js"]
+}
