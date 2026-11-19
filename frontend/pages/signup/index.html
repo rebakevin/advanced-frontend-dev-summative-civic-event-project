@@ -1,0 +1,41 @@
+<div class="mx-auto w-full max-w-md px-4 py-10">
+  <div class="card card-pad">
+    <h1 class="mb-2">Create your account</h1>
+    <p class="mb-6 text-muted">Join CivicEvents to find and register for community events.</p>
+
+    <form id="signup-form" class="form-stack" novalidate>
+      <div class="field">
+        <label for="full_name">Full name</label>
+        <input id="full_name" name="full_name" type="text" autocomplete="name" aria-describedby="full_name-error" required>
+        <p class="field-error" id="full_name-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-error" required>
+        <p class="field-error" id="email-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" aria-describedby="password-hint password-error" required>
+        <span class="field-hint" id="password-hint">At least 8 characters with upper and lower case letters, a number and a special character.</span>
+        <div class="strength" id="password-strength" data-level="0" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <span class="strength-label" id="password-strength-label" aria-live="polite"></span>
+        <p class="field-error" id="password-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="confirm_password">Confirm password</label>
+        <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" aria-describedby="confirm_password-error" required>
+        <p class="field-error" id="confirm_password-error" hidden></p>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary btn-lg w-full" type="submit">Create account</button>
+      </div>
+    </form>
+
+    <p class="mt-6 text-center">Already have an account? <a href="{{root}}login/">Sign in</a></p>
+  </div>
+</div>

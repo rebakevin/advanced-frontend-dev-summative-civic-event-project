@@ -1,0 +1,38 @@
+<div class="mx-auto w-full max-w-md px-4 py-10">
+  <div class="card card-pad">
+    <h1 class="mb-2">Sign in</h1>
+    <p class="mb-6 text-muted">Welcome back. Sign in to see your events.</p>
+
+    <div id="demo-credentials" hidden></div>
+
+    <div id="login-error" class="alert alert-error mb-4" role="alert" hidden></div>
+
+    <form id="login-form" class="form-stack" novalidate>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-error" required>
+        <p class="field-error" id="email-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" aria-describedby="password-error" required>
+        <p class="field-error" id="password-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label class="check" for="remember">
+          <input id="remember" name="remember" type="checkbox" aria-describedby="remember-hint">
+          <span>Remember me</span>
+        </label>
+        <span class="field-hint" id="remember-hint">Remembered sessions stay in this browser until you sign out. On shared computers leave this unchecked.</span>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary btn-lg w-full" type="submit">Sign in</button>
+      </div>
+    </form>
+
+    <p class="mt-6 text-center">New here? <a href="{{root}}signup/">Create an account</a></p>
+  </div>
+</div>
