@@ -1,0 +1,27 @@
+<div class="mx-auto w-full max-w-6xl px-4 py-8">
+  <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+    <h1>Events</h1>
+    <a class="btn btn-primary" href="{{root}}event-form/" data-role="admin">New event</a>
+  </div>
+
+  <form id="events-filters" class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3" novalidate>
+    <div class="field">
+      <label for="filter-q">Search</label>
+      <input id="filter-q" name="q" type="search" placeholder="Title or location" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="filter-date">Date</label>
+      <input id="filter-date" name="date" type="date">
+    </div>
+    <div class="field">
+      <label for="filter-location">Location</label>
+      <select id="filter-location" name="location">
+        <option value="">All locations</option>
+      </select>
+    </div>
+  </form>
+
+  <p id="events-count" class="mb-4 text-muted" aria-live="polite"></p>
+  <div id="events-list" class="grid-cards"></div>
+  <nav id="events-pagination" class="pagination mt-8" aria-label="Pagination" hidden></nav>
+</div>
