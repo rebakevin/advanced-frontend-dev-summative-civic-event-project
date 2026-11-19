@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Community event illustration">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dbeafe"/>
+      <stop offset="1" stop-color="#fef3c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <circle cx="960" cy="150" r="70" fill="#fbbf24" opacity=".85"/>
+  <path d="M0 430 Q300 360 600 420 T1200 400 V630 H0Z" fill="#86efac"/>
+  <path d="M0 500 Q350 440 700 500 T1200 480 V630 H0Z" fill="#4ade80"/>
+  <g stroke="#1e3a8a" stroke-width="4" fill="none"><path d="M180 330 V470"/><path d="M180 330 H1020" opacity="0"/></g>
+  <path d="M120 300 L300 300 L300 340 Q255 370 210 340 Q165 370 120 340Z" fill="#f87171"/>
+  <path d="M300 300 L480 300 L480 340 Q435 370 390 340 Q345 370 300 340Z" fill="#fff"/>
+  <path d="M480 300 L660 300 L660 340 Q615 370 570 340 Q525 370 480 340Z" fill="#60a5fa"/>
+  <g fill="#1e3a8a"><rect x="116" y="300" width="8" height="190"/><rect x="656" y="300" width="8" height="190"/></g>
+  <g>
+    <circle cx="260" cy="420" r="22" fill="#fcd9b6"/><rect x="238" y="442" width="44" height="70" rx="18" fill="#ef4444"/>
+    <circle cx="390" cy="425" r="22" fill="#e0b48a"/><rect x="368" y="447" width="44" height="65" rx="18" fill="#2563eb"/>
+    <circle cx="520" cy="420" r="22" fill="#8d5a3b"/><rect x="498" y="442" width="44" height="70" rx="18" fill="#f59e0b"/>
+    <circle cx="820" cy="440" r="20" fill="#fcd9b6"/><rect x="800" y="460" width="40" height="62" rx="16" fill="#8b5cf6"/>
+    <circle cx="920" cy="445" r="20" fill="#c68642"/><rect x="900" y="465" width="40" height="58" rx="16" fill="#10b981"/>
+  </g>
+  <g stroke="#475569" stroke-width="3" fill="none"><path d="M700 120 Q850 200 1000 110"/></g>
+  <g>
+    <circle cx="745" cy="148" r="12" fill="#f87171"/><circle cx="800" cy="170" r="12" fill="#60a5fa"/>
+    <circle cx="860" cy="178" r="12" fill="#fbbf24"/><circle cx="920" cy="162" r="12" fill="#4ade80"/>
+    <circle cx="970" cy="130" r="12" fill="#a78bfa"/>
+  </g>
+  <rect x="120" y="90" width="460" height="14" rx="7" fill="#1e3a8a" opacity=".8"/>
+  <rect x="120" y="125" width="320" height="14" rx="7" fill="#1e3a8a" opacity=".45"/>
+  <rect x="120" y="160" width="380" height="14" rx="7" fill="#1e3a8a" opacity=".25"/>
+</svg>
