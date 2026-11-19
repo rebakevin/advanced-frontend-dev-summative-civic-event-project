@@ -1,0 +1,28 @@
+<div class="mx-auto w-full max-w-6xl px-4 py-8">
+  <h1 id="dashboard-greeting" class="mb-2">My dashboard</h1>
+  <p class="mb-6 text-muted">Your activity at a glance.</p>
+
+  <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3" aria-live="polite">
+    <div class="stat stat-hl"><span id="stat-registered" class="stat-n">-</span><span class="stat-l">Registered events</span></div>
+    <div class="stat"><span id="stat-feedback" class="stat-n">-</span><span class="stat-l">Feedback given</span></div>
+    <div class="stat"><span id="stat-unread" class="stat-n">-</span><span class="stat-l">Unread notifications</span></div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+    <section aria-labelledby="upcoming-heading">
+      <div class="mb-3 flex items-center justify-between gap-4">
+        <h2 id="upcoming-heading">Your upcoming registrations</h2>
+        <a class="btn btn-sm btn-ghost" href="#" id="view-all-registrations">View all</a>
+      </div>
+      <div id="dashboard-upcoming" class="flex flex-col gap-3"></div>
+    </section>
+
+    <section aria-labelledby="latest-notifs-heading">
+      <div class="mb-3 flex items-center justify-between gap-4">
+        <h2 id="latest-notifs-heading">Latest notifications</h2>
+        <a class="btn btn-sm btn-ghost" href="#" id="view-all-notifications">View all</a>
+      </div>
+      <div id="dashboard-notifs" class="flex flex-col gap-3"></div>
+    </section>
+  </div>
+</div>
