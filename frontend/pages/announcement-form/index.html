@@ -1,0 +1,45 @@
+<div class="mx-auto w-full max-w-2xl px-4 py-10">
+  <div class="card card-pad">
+    <h1 class="mb-2" id="announcement-form-title">Announcement</h1>
+    <p class="mb-6 text-muted">Fill in the details below. Fields marked as required must be completed.</p>
+
+    <div id="announcement-form-state"></div>
+
+    <form id="announcement-form" class="form-stack" novalidate hidden>
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" maxlength="200" aria-describedby="title-error" required>
+        <p class="field-error" id="title-error" hidden></p>
+      </div>
+
+      <!-- Create only: the backend ignores a new audio file on edit. -->
+      <div class="field" id="audio-field">
+        <label for="audio">Audio file</label>
+        <input id="audio" name="audio" type="file" accept=".mp3,.wav,.m4a,.ogg,audio/mpeg,audio/wav,audio/mp4,audio/x-m4a,audio/ogg" aria-describedby="audio-hint audio-error" required>
+        <span class="field-hint" id="audio-hint">MP3, WAV, M4A or OGG, up to 5 MB.</span>
+        <p class="field-error" id="audio-error" hidden></p>
+        <div id="audio-progress"></div>
+      </div>
+
+      <!-- Edit only: current audio, read-only. -->
+      <div class="field" id="audio-current" hidden>
+        <label for="audio-current-el">Current audio</label>
+        <audio id="audio-current-el" class="w-full" controls preload="metadata" aria-describedby="audio-current-hint">Your browser cannot play this audio.</audio>
+        <span class="field-hint" id="audio-current-hint">The audio file cannot be replaced; delete and create a new announcement to change it.</span>
+      </div>
+
+      <div class="field">
+        <label class="check" for="published">
+          <input id="published" name="published" type="checkbox" checked>
+          <span>Published (visible to all users)</span>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="announcement-submit">Save announcement</button>
+        <a class="btn btn-ghost" id="announcement-cancel" href="{{root}}announcements/">Cancel</a>
+        <button class="btn btn-danger ml-auto" type="button" id="announcement-delete" hidden>Delete announcement</button>
+      </div>
+    </form>
+  </div>
+</div>

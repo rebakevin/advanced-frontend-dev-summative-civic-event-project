@@ -1,0 +1,5 @@
+{
+  "title": "Promo form",
+  "guard": "admin",
+  "scripts": ["features/event-common.js", "features/promo-common.js", "features/promo-form.js"]
+}

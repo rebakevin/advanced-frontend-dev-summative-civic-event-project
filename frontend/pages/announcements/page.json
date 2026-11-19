@@ -1,0 +1,5 @@
+{
+  "title": "Announcements",
+  "guard": "user",
+  "scripts": ["features/event-common.js", "features/announcement-common.js", "features/announcements.js"]
+}

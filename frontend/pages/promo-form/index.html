@@ -1,0 +1,50 @@
+<div class="mx-auto w-full max-w-2xl px-4 py-10">
+  <div class="card card-pad">
+    <h1 class="mb-2" id="promo-form-title">Promo</h1>
+    <p class="mb-6 text-muted">Fill in the details below. Fields marked as required must be completed.</p>
+
+    <div id="promo-form-state"></div>
+
+    <form id="promo-form" class="form-stack" novalidate hidden>
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" maxlength="200" aria-describedby="title-error" required>
+        <p class="field-error" id="title-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" aria-describedby="description-error" required></textarea>
+        <p class="field-error" id="description-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="video">Video</label>
+        <input id="video" name="video" type="file" accept=".mp4,.mov,.avi,.mkv,video/mp4,video/quicktime,video/x-msvideo,video/x-matroska" aria-describedby="video-hint video-error">
+        <span class="field-hint" id="video-hint">MP4, MOV, AVI or MKV, up to 8 MB.</span>
+        <p class="field-error" id="video-error" hidden></p>
+        <div id="video-progress"></div>
+      </div>
+
+      <div class="field">
+        <label for="caption_text">Caption text</label>
+        <textarea id="caption_text" name="caption_text" rows="6" aria-describedby="caption_text-hint caption_text-error" required></textarea>
+        <span class="field-hint" id="caption_text-hint">Spoken words of the video. Shown as captions and as a transcript.</span>
+        <p class="field-error" id="caption_text-error" hidden></p>
+      </div>
+
+      <div class="field" id="published-field" hidden>
+        <label class="check" for="published">
+          <input id="published" name="published" type="checkbox">
+          <span>Published</span>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="promo-submit">Save promo</button>
+        <a class="btn btn-ghost" id="promo-cancel" href="{{root}}promos/">Cancel</a>
+        <button class="btn btn-danger ml-auto" type="button" id="promo-delete" hidden>Delete promo</button>
+      </div>
+    </form>
+  </div>
+</div>
