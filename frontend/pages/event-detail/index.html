@@ -1,0 +1,46 @@
+<div class="mx-auto w-full max-w-4xl px-4 py-8">
+  <p class="mb-4"><a href="{{root}}events/">&larr; Back to events</a></p>
+
+  <!-- Skeleton, error and populated states are rendered here by event-detail.js -->
+  <div id="event-detail" aria-live="polite" aria-busy="true"></div>
+
+  <section id="feedback-section" class="mt-10" aria-labelledby="feedback-heading">
+    <h2 id="feedback-heading" class="mb-4">Your feedback</h2>
+
+    <div class="card card-pad">
+      <p id="feedback-intro" class="mb-4 text-muted">Tell the organisers how this event went. You can leave one review per event and edit it later.</p>
+
+      <form id="feedback-form" class="form-stack" novalidate>
+        <div class="field">
+          <label for="feedback-rating">Rating</label>
+          <select id="feedback-rating" name="rating" aria-describedby="feedback-rating-error" required>
+            <option value="">Select a rating</option>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Good</option>
+            <option value="3">3 - Okay</option>
+            <option value="2">2 - Poor</option>
+            <option value="1">1 - Very poor</option>
+          </select>
+          <p class="field-error" id="feedback-rating-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="feedback-comment">Comment</label>
+          <textarea id="feedback-comment" name="comment" rows="4" maxlength="1000" aria-describedby="feedback-comment-error"></textarea>
+          <p class="field-error" id="feedback-comment-error" hidden></p>
+        </div>
+
+        <div class="form-actions">
+          <button id="feedback-submit" class="btn btn-primary" type="submit">Submit feedback</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ROLE GUARD: markup. Admin only. Removed from the DOM for normal users (control guard). -->
+    <div data-role="admin" id="feedback-admin" class="mt-8">
+      <h2 class="mb-2">All feedback</h2>
+      <p id="feedback-average" class="mb-4 font-semibold" hidden></p>
+      <div id="feedback-list" aria-live="polite"></div>
+    </div>
+  </section>
+</div>
