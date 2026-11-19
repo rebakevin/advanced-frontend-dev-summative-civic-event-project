@@ -1,0 +1,72 @@
+/*
+ * Buttons.
+ * <button class="btn btn-primary">Register</button>
+ * Variants: btn-primary, btn-secondary (yellow), btn-ghost, btn-danger, btn-dark. Sizes: btn-sm, btn-lg.
+ * Icon only: <button class="btn btn-icon btn-ghost" aria-label="Close"><svg/></button>
+ * Busy: add .is-loading and aria-busy="true" (and disabled). Link-button: <button class="btn-link">.
+ */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-s2 rounded-pill border border-ink bg-surface text-ink font-mono uppercase;
+    position: relative;
+    min-height: 44px;
+    padding: 0 24px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .btn:hover { filter: brightness(0.96); transform: translateY(-1px); }
+  .btn:active { transform: none; }
+
+  .btn-primary { @apply bg-orange border-orange text-ink; }
+  .btn-secondary { @apply bg-yellow border-yellow text-ink; }
+  .btn-ghost { @apply bg-transparent; }
+  .btn-danger { @apply bg-red border-red text-white; }
+  .btn-dark { @apply bg-ink border-ink text-white; }
+
+  .btn-sm { padding: 0 16px; font-size: 12px; }
+  .btn-lg { min-height: 52px; padding: 0 32px; font-size: 14px; }
+
+  .btn-icon { padding: 0; width: 44px; border-radius: 8px; }
+  .btn-icon.btn-sm { width: 44px; }
+
+  .btn[disabled], .btn[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+  }
+
+  /* Label stays in layout (no width jump); spinner sits on top. */
+  .btn.is-loading { color: transparent; pointer-events: none; opacity: 0.6; cursor: progress; }
+  .btn.is-loading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid #111111;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin 0.7s linear infinite;
+  }
+  .btn-danger.is-loading::after, .btn-dark.is-loading::after { border-color: #fff; border-right-color: transparent; }
+  @keyframes btn-spin { to { transform: rotate(360deg); } }
+
+  .btn-link {
+    @apply inline text-blue-deep bg-transparent border-0 underline;
+    min-height: 44px;
+    padding: 0 4px;
+    font: inherit;
+    cursor: pointer;
+  }
+  .btn-link:hover { @apply text-blue; }
+  .btn-link[disabled] { opacity: 0.6; cursor: not-allowed; }
+}

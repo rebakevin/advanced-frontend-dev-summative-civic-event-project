@@ -1,0 +1,104 @@
+/*
+ * Forms.
+ * <div class="field">
+ *   <label for="email">Email</label>
+ *   <input id="email" type="email" aria-describedby="email-hint email-error">
+ *   <span class="field-hint" id="email-hint">...</span>
+ *   <p class="field-error" id="email-error" hidden>...</p>   (JS sets aria-invalid="true" and unhides)
+ * </div>
+ * Checkbox: <label class="check"><input type="checkbox"><span>Remember me</span></label>
+ * Strength: <div class="strength" data-level="0..4"><span></span><span></span><span></span><span></span></div> + .strength-label
+ * Search: <div class="search-input"><svg/><input type="search" aria-label="Search"></div>
+ * Layout: .form-stack (vertical gap), .form-row (2 columns from sm), .form-actions.
+ */
+@layer components {
+  .field { @apply flex flex-col gap-s2; }
+  .field > label, .field-label { @apply text-15 text-ink; font-weight: 600; }
+  .field-hint { @apply text-sm text-muted; }
+
+  .field input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  .field select,
+  .field textarea {
+    @apply w-full bg-surface rounded-md text-ink;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1.5px solid #6E7380;
+  }
+  .field textarea { min-height: 120px; resize: vertical; }
+  .field select { appearance: auto; }
+  .field input::placeholder, .field textarea::placeholder { @apply text-muted; opacity: 0.8; }
+  .field input:disabled, .field select:disabled, .field textarea:disabled {
+    @apply bg-surface-2; cursor: not-allowed; opacity: 0.7;
+  }
+
+  .field input[type="file"] {
+    @apply w-full bg-surface rounded-md text-sm;
+    min-height: 48px;
+    padding: 8px 10px;
+    border: 1.5px dashed #6E7380;
+  }
+  .field input[type="file"]::file-selector-button {
+    @apply rounded-pill bg-ink text-white font-mono uppercase border-0;
+    min-height: 32px;
+    margin-right: 12px;
+    padding: 0 14px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+  }
+
+  .check { @apply flex items-start gap-s3 text-base; min-height: 44px; cursor: pointer; align-items: center; }
+  .check input[type="checkbox"], .check input[type="radio"] {
+    width: 22px; height: 22px; flex: none; accent-color: #111111; cursor: pointer;
+  }
+
+  /* Error state: colour plus border weight and message text, never colour alone */
+  .field input[aria-invalid="true"],
+  .field select[aria-invalid="true"],
+  .field textarea[aria-invalid="true"] {
+    @apply border-red;
+    background: #FFF7F6;
+    border-width: 2px;
+  }
+  .field-error {
+    @apply text-sm text-red flex items-start gap-s2;
+    font-weight: 500;
+    margin: 0;
+  }
+  .field-error::before {
+    content: '!';
+    flex: none;
+    width: 18px; height: 18px; margin-top: 1px;
+    border-radius: 50%;
+    background: #B3261E; color: #fff;
+    font: 700 12px/18px 'JetBrains Mono', monospace;
+    text-align: center;
+  }
+  .field-error[hidden] { display: none; }
+
+  /* Password strength: four segments filled by data-level */
+  .strength { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .strength > span { height: 6px; border-radius: 999px; background: #C4C6BE; }
+  .strength[data-level="1"] > span:nth-child(-n+1) { background: #B3261E; }
+  .strength[data-level="2"] > span:nth-child(-n+2) { background: #F8AC17; }
+  .strength[data-level="3"] > span:nth-child(-n+3) { background: #2DB84B; }
+  .strength[data-level="4"] > span:nth-child(-n+4) { background: #146B28; }
+  .strength-label { @apply text-sm text-muted; }
+
+  .search-input { @apply relative flex items-center; }
+  .search-input > svg, .search-input > .search-icon {
+    position: absolute; left: 14px; width: 18px; height: 18px; pointer-events: none; color: #464950;
+  }
+  .search-input > input {
+    @apply w-full bg-surface rounded-pill text-ink;
+    min-height: 48px;
+    padding: 10px 16px 10px 42px;
+    border: 1.5px solid #6E7380;
+  }
+
+  .form-stack { @apply flex flex-col gap-s5; }
+  .form-row { @apply grid grid-cols-1 gap-s4; }
+  @media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+  .form-actions { @apply flex flex-wrap items-center gap-s3; }
+  .form-error-summary { @apply bg-red-tint border border-red text-red rounded-lg p-s4 text-15; }
+}
