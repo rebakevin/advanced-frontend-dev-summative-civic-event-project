@@ -1,0 +1,56 @@
+<div class="mx-auto w-full max-w-2xl px-4 py-10">
+  <div class="card card-pad">
+    <h1 class="mb-2" id="event-form-title">Event</h1>
+    <p class="mb-6 text-muted">Fill in the details below. Fields marked as required must be completed.</p>
+
+    <div id="event-form-state"></div>
+
+    <form id="event-form" class="form-stack" novalidate hidden>
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" maxlength="200" aria-describedby="title-error" required>
+        <p class="field-error" id="title-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="5" aria-describedby="description-error"></textarea>
+        <p class="field-error" id="description-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="location">Location</label>
+        <input id="location" name="location" type="text" maxlength="200" aria-describedby="location-error" required>
+        <p class="field-error" id="location-error" hidden></p>
+      </div>
+
+      <div class="form-row sm:grid-cols-2">
+        <div class="field">
+          <label for="starts_at">Starts</label>
+          <input id="starts_at" name="starts_at" type="datetime-local" aria-describedby="starts_at-error" required>
+          <p class="field-error" id="starts_at-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="ends_at">Ends</label>
+          <input id="ends_at" name="ends_at" type="datetime-local" aria-describedby="ends_at-error" required>
+          <p class="field-error" id="ends_at-error" hidden></p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="image">Image</label>
+        <input id="image" name="image" type="file" accept=".jpg,.jpeg,.png,.gif,image/jpeg,image/png,image/gif" aria-describedby="image-hint image-error">
+        <span class="field-hint" id="image-hint">JPG, PNG or GIF, up to 2 MB.</span>
+        <div class="card-img w-full max-w-sm rounded-lg" id="image-preview" hidden></div>
+        <p class="field-error" id="image-error" hidden></p>
+        <div id="image-progress"></div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="event-submit">Save event</button>
+        <a class="btn btn-ghost" id="event-cancel" href="{{root}}events/">Cancel</a>
+        <button class="btn btn-danger ml-auto" type="button" id="event-delete" hidden>Delete event</button>
+      </div>
+    </form>
+  </div>
+</div>

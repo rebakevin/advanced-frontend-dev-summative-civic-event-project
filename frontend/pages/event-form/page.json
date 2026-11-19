@@ -1,0 +1,5 @@
+{
+  "title": "Event form",
+  "guard": "admin",
+  "scripts": ["features/event-common.js", "features/event-form.js"]
+}
