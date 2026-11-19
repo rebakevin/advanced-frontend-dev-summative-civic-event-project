@@ -1,0 +1,6 @@
+{
+  "title": "Users",
+  "guard": "admin",
+  "sidebar": true,
+  "scripts": ["features/event-common.js", "features/admin-users.js"]
+}
