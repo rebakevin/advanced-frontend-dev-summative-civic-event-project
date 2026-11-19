@@ -32,9 +32,8 @@
     function loadRegistrations() {
       $('#stat-registered').text('-');
       App.skeleton.show($upcoming, { count: 3 });
-      App.api.get('/event-registrations/my-registrations', null, { inline: true })
-        .done(function (regs) {
-          var active = $.grep($.isArray(regs) ? regs : [], function (r) { return r.status === 'registered'; });
+      App.events.loadActiveRegistrations({ inline: true })
+        .done(function (active) {
           $('#stat-registered').text(String(active.length));
 
           var now = Date.now();
@@ -70,9 +69,12 @@
     }
 
     // Unread comes from the client-side read state, not from the server count.
+    var painted = false;
+
     function paintNotifications(list) {
       $('#stat-unread').text(String(App.notifications.unreadCount(list)));
       var items = (list || []).slice(0, NOTIF_LIMIT);
+      painted = true;
       if (!items.length) {
         App.skeleton.empty($notifs, {
           title: 'No notifications yet',
@@ -82,25 +84,24 @@
       }
       $notifs.removeAttr('aria-busy').empty();
       $.each(items, function (i, n) {
-        var $link = $('<a class="card card-link block"></a>')
-          .attr('href', App.pageUrl('notifications', { id: n.id }))
-          .appendTo($notifs);
-        App.notifications.buildRow(n).appendTo($link);
+        $notifs.append(App.notifications.buildLink(n));
       });
     }
 
     function loadNotifications() {
       $('#stat-unread').text('-');
+      painted = false;
       App.skeleton.show($notifs, { count: 3 });
       App.notifications.load({ force: true })
         .done(paintNotifications)
         .fail(function (err) {
+          painted = false;
           App.skeleton.error($notifs, { message: err && err.message, onRetry: loadNotifications });
         });
     }
 
     $(document).on('notifications:change', function (e, list) {
-      if ($notifs.children('.notif, a').length) paintNotifications(list);
+      if (painted) paintNotifications(list);
     });
 
     loadRegistrations();

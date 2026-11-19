@@ -99,9 +99,9 @@
   .drawer-list { @apply flex-1 list-none m-0 p-0; overflow-y: auto; }
   .drawer-item { @apply border-b border-line; padding: 16px 24px; }
   .drawer-item-flush { padding: 0; }
-  .drawer-notif { @apply block no-underline text-ink; }
-  .drawer-notif:hover .notif { @apply bg-bg-soft; }
-  .drawer-notif:focus-visible { @apply outline outline-[3px] -outline-offset-2 outline-ink; }
+  .notif-link { @apply block no-underline text-ink; }
+  .notif-link:hover .notif { @apply bg-bg-soft; }
+  .notif-link:focus-visible { @apply outline outline-[3px] -outline-offset-2 outline-ink; }
   .drawer-empty { @apply text-muted text-center; padding: 40px 24px; }
   .drawer-footer { @apply border-t border-line; padding: 16px 24px; }
   .drawer-footer .btn { @apply w-full; }

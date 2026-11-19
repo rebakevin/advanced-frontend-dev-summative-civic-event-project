@@ -145,31 +145,6 @@
       return $card;
     }
 
-    function renderPagination(pages) {
-      $pagination.empty();
-      if (pages <= 1) {
-        $pagination.prop('hidden', true);
-        return;
-      }
-      $pagination.prop('hidden', false);
-      function btn(label, target, extra) {
-        var $b = $('<button class="page-btn" type="button"></button>').text(label).appendTo($pagination);
-        if (extra && extra.ariaLabel) $b.attr('aria-label', extra.ariaLabel);
-        if (extra && extra.current) $b.attr('aria-current', 'page');
-        if (extra && extra.disabled) $b.prop('disabled', true);
-        $b.on('click', function () {
-          page = target;
-          render();
-          $('h1')[0].scrollIntoView();
-        });
-      }
-      btn('Prev', page - 1, { disabled: page <= 1, ariaLabel: 'Previous page' });
-      for (var i = 1; i <= pages; i++) {
-        btn(String(i), i, { current: i === page, ariaLabel: 'Page ' + i });
-      }
-      btn('Next', page + 1, { disabled: page >= pages, ariaLabel: 'Next page' });
-    }
-
     function render() {
       var items = filtered();
       var pages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
@@ -191,7 +166,7 @@
       $.each(items.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE), function (i, ev) {
         $list.append(buildCard(ev));
       });
-      renderPagination(pages);
+      App.ui.pagination($pagination, { page: page, pages: pages, onChange: function (p) { page = p; render(); } });
     }
 
     function load() {

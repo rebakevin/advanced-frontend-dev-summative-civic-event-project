@@ -51,9 +51,8 @@
 
     function load() {
       App.skeleton.show($list, { count: 3 });
-      App.api.get('/event-registrations/my-registrations', null, { inline: true })
-        .done(function (regs) {
-          var active = $.grep($.isArray(regs) ? regs : [], function (r) { return r.status === 'registered'; });
+      App.events.loadActiveRegistrations({ inline: true })
+        .done(function (active) {
           if (!active.length) {
             showEmpty();
             return;

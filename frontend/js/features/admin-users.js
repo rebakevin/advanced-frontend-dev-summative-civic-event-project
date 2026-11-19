@@ -30,38 +30,11 @@
         .attr('aria-label', (user.is_active ? 'Disable ' : 'Enable ') + user.full_name);
     }
 
-    function openProfile(user, $opener) {
-      var previous = $opener[0];
-      var $backdrop = $('<div class="modal-backdrop" data-modal-backdrop></div>');
-      var $modal = $('<div class="modal" role="dialog" aria-modal="true" aria-labelledby="user-panel-title"></div>')
-        .appendTo($backdrop);
-      var $header = $('<div class="modal-header"></div>').appendTo($modal);
-      $('<h2 class="modal-title" id="user-panel-title"></h2>').text(user.full_name || 'User profile').appendTo($header);
-      var $close = $('<button class="modal-close" type="button" aria-label="Close">×</button>').appendTo($header);
-      var $body = $('<div class="modal-body"></div>').appendTo($modal);
-      var $footer = $('<div class="modal-footer"></div>').appendTo($modal);
-      var $done = $('<button class="btn btn-ghost" type="button">Close</button>').appendTo($footer);
-
-      function close() {
-        $(document).off('keydown', onKey);
-        $backdrop.remove();
-        if (!$('.modal-backdrop.is-open').length) $(document.body).removeClass('no-scroll');
-        if (previous && document.contains(previous)) previous.focus();
-      }
-      function onKey(e) {
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          close();
-        } else if (e.key === 'Tab') {
-          App.ui.trapTab(e, $modal);
-        }
-      }
-      $close.add($done).on('click', close);
-      $backdrop.on('mousedown', function (e) { if (e.target === $backdrop[0]) close(); });
-      $(document).on('keydown', onKey);
-      $backdrop.appendTo(document.body).addClass('is-open');
-      $(document.body).addClass('no-scroll');
-      $close[0].focus();
+    function openProfile(user) {
+      var $body = $('<div></div>');
+      var $done = $('<button class="btn btn-ghost" type="button">Close</button>');
+      var dialog = App.modal.open({ title: user.full_name || 'User profile', $body: $body, $footer: $done });
+      $done.on('click', function () { dialog.close(); });
 
       function fill(u) {
         $body.empty().removeAttr('aria-busy');
@@ -90,6 +63,25 @@
       load();
     }
 
+    function toggleUser(user, $tr, $toggle) {
+      var disabling = !!user.is_active;
+      App.modal.confirm({
+        title: disabling ? 'Disable user?' : 'Enable user?',
+        message: disabling
+          ? user.full_name + ' will no longer be able to sign in.'
+          : user.full_name + ' will be able to sign in again.',
+        confirmLabel: disabling ? 'Disable' : 'Enable',
+        danger: disabling,
+      }).done(function () {
+        var req = App.api.patch('/users/' + encodeURIComponent(user.id) + (disabling ? '/disable' : '/enable'), null, { inline: true });
+        App.ui.withLoading($toggle, req).done(function () {
+          user.is_active = !disabling;
+          applyStatus($tr, user);
+          App.toast.success(user.full_name + (disabling ? ' disabled.' : ' enabled.'));
+        });
+      });
+    }
+
     function buildRow(user) {
       var $tr = $('<tr></tr>');
       $('<td></td>').text(user.full_name).appendTo($tr);
@@ -101,7 +93,7 @@
 
       var $view = $('<button class="btn btn-sm btn-ghost" type="button"></button>')
         .attr('aria-label', 'View profile of ' + user.full_name).text('View profile').appendTo($actions);
-      $view.on('click', function () { openProfile(user, $view); });
+      $view.on('click', function () { openProfile(user); });
 
       /* ROLE GUARD: admin only. Enable/disable changes account access; the backend enforces the role.
          The signed-in admin cannot disable their own account. */
@@ -113,47 +105,9 @@
           .text('This is your account.').appendTo($actions);
         $toggle.attr('aria-describedby', 'user-self-' + user.id);
       } else {
-        $toggle.on('click', function () {
-          var disabling = !!user.is_active;
-          App.modal.confirm({
-            title: disabling ? 'Disable user?' : 'Enable user?',
-            message: disabling
-              ? user.full_name + ' will no longer be able to sign in.'
-              : user.full_name + ' will be able to sign in again.',
-            confirmLabel: disabling ? 'Disable' : 'Enable',
-            danger: disabling,
-          }).done(function () {
-            var req = App.api.patch('/users/' + encodeURIComponent(user.id) + (disabling ? '/disable' : '/enable'), null, { inline: true });
-            App.ui.withLoading($toggle, req).done(function (res) {
-              var next = res && typeof res.is_active !== 'undefined' ? res : { is_active: !disabling };
-              user.is_active = !!next.is_active;
-              applyStatus($tr, user);
-              App.toast.success(user.full_name + (user.is_active ? ' enabled.' : ' disabled.'));
-            });
-          });
-        });
+        $toggle.on('click', function () { toggleUser(user, $tr, $toggle); });
       }
       return $tr;
-    }
-
-    function renderPagination(hasMore) {
-      $pagination.empty();
-      if (page <= 1 && !hasMore) {
-        $pagination.prop('hidden', true);
-        return;
-      }
-      $pagination.prop('hidden', false);
-      function btn(label, target, disabled, ariaLabel) {
-        $('<button class="page-btn" type="button"></button>').text(label).attr('aria-label', ariaLabel)
-          .prop('disabled', disabled).appendTo($pagination).on('click', function () {
-            page = target;
-            load();
-            $('h1')[0].scrollIntoView();
-          });
-      }
-      btn('Prev', page - 1, page <= 1, 'Previous page');
-      $('<span class="page-btn" aria-current="page"></span>').text(String(page)).appendTo($pagination);
-      btn('Next', page + 1, !hasMore, 'Next page');
     }
 
     function load() {
@@ -182,7 +136,11 @@
           $.each(users, function (i, u) { $tbody.append(buildRow(u)); });
           $list.removeAttr('aria-busy').empty().append($wrap);
           // The API returns no total, so a full page means there may be another one.
-          renderPagination(users.length === LIMIT);
+          App.ui.pagination($pagination, {
+            page: page,
+            hasMore: users.length === LIMIT,
+            onChange: function (p) { page = p; load(); },
+          });
         })
         .fail(function (err) {
           App.skeleton.error($list, { message: err && err.message, onRetry: load });

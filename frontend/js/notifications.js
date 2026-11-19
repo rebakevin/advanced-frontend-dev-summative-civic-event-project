@@ -4,8 +4,10 @@
   var KEY_PREFIX = 'civic.readNotifications.';
   var PREVIEW_LENGTH = 90;
   var DRAWER_LIMIT = 8;
+  var FRESH_MS = 30000;
 
   var cache = null; // latest list from GET /notifications
+  var fetchedAt = 0;
   var loading = null; // in-flight promise
   var readIds = null; // {id: true}, loaded lazily per signed-in user
 
@@ -49,30 +51,11 @@
   }
 
   // Optimistic: the UI updates first; if the write fails the change is reverted.
-  function markRead(id) {
+  function markIds(ids) {
     loadRead();
-    if (readIds[id]) return true;
-    readIds[id] = true;
-    changed();
-    if (!saveRead()) {
-      delete readIds[id];
-      changed();
-      App.toast.error('Could not save this change in your browser.');
-      return false;
-    }
-    return true;
-  }
-
-  function markAllRead() {
-    loadRead();
-    var added = [];
-    $.each(cache || [], function (i, n) {
-      if (!readIds[n.id]) {
-        readIds[n.id] = true;
-        added.push(n.id);
-      }
-    });
+    var added = $.grep(ids, function (id) { return !readIds[id]; });
     if (!added.length) return true;
+    $.each(added, function (i, id) { readIds[id] = true; });
     changed();
     if (!saveRead()) {
       $.each(added, function (i, id) { delete readIds[id]; });
@@ -83,21 +66,29 @@
     return true;
   }
 
-  // Resolves with the list. Concurrent callers share one request.
-  // opts.force refetches; opts.inline / opts.silent go to App.api.get.
+  function markRead(id) {
+    return markIds([id]);
+  }
+
+  function markAllRead() {
+    return markIds($.map(cache || [], function (n) { return n.id; }));
+  }
+
+  // Resolves with the list. Concurrent callers share one request, and opts.force
+  // still reuses a list fetched in the last FRESH_MS (the bell loads it on page load).
+  // opts.inline / opts.silent go to App.api.get.
   function load(opts) {
     opts = opts || {};
-    if (!opts.force && cache) return $.Deferred().resolve(cache).promise();
+    var fresh = cache && Date.now() - fetchedAt < FRESH_MS;
+    if (cache && (!opts.force || fresh)) return $.Deferred().resolve(cache).promise();
     if (loading) return loading;
-    var dfd = $.Deferred();
-    loading = dfd.promise();
-    App.api.get('/notifications', null, { inline: opts.inline !== false, silent: !!opts.silent })
-      .done(function (list) {
+    loading = App.api.get('/notifications', null, { inline: opts.inline !== false, silent: !!opts.silent })
+      .then(function (list) {
         cache = $.isArray(list) ? list : [];
+        fetchedAt = Date.now();
         changed();
-        dfd.resolve(cache);
+        return cache;
       })
-      .fail(function (err) { dfd.reject(err); })
       .always(function () { loading = null; });
     return loading;
   }
@@ -161,6 +152,13 @@
     return $row;
   }
 
+  // Link to the notification detail wrapping a row. Clicking it marks it read (see init).
+  function buildLink(n) {
+    var $link = $('<a class="notif-link"></a>').attr('href', App.pageUrl('notifications', { id: n.id })).data('id', n.id);
+    buildRow(n).appendTo($link);
+    return $link;
+  }
+
   function paintBell() {
     var $count = $('#notif-count');
     var $bell = $('#notif-bell');
@@ -183,10 +181,7 @@
     }
     $.each(items, function (i, n) {
       var $li = $('<li class="drawer-item drawer-item-flush"></li>').appendTo($list);
-      var $link = $('<a class="drawer-notif"></a>')
-        .attr('href', App.pageUrl('notifications', { id: n.id }))
-        .data('id', n.id).appendTo($li);
-      buildRow(n).appendTo($link);
+      buildLink(n).appendTo($li);
     });
   }
 
@@ -217,16 +212,10 @@
       if (App.drawer.isOpen()) renderDrawer();
     });
 
-    // Clicking a notification marks it read (optimistic) and then follows the link.
-    $('#drawer-list').on('click', '.drawer-notif', function () {
-      markRead($(this).data('id'));
-    });
   }
 
   App.notifications = {
     load: load,
-    list: function () { return cache || []; },
-    isRead: isRead,
     unreadCount: unreadCount,
     markRead: markRead,
     markAllRead: markAllRead,
@@ -234,10 +223,15 @@
     typeLabel: typeLabel,
     chipClass: chipClass,
     preview: preview,
-    timeAgo: timeAgo,
     relatedLink: relatedLink,
     buildRow: buildRow,
+    buildLink: buildLink,
   };
+
+  // Clicking any notification link marks it read (optimistic) and then follows the link.
+  $(document).on('click', '.notif-link', function () {
+    markRead($(this).data('id'));
+  });
 
   $(function () {
     if (App.guard && App.guard.redirected) return;

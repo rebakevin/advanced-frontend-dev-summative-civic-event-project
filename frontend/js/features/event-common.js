@@ -39,17 +39,28 @@
   }
 
   // The backend keeps cancelled registrations as rows, so only 'registered' counts.
+  function activeOnly(registrations) {
+    return $.grep($.isArray(registrations) ? registrations : [], function (reg) {
+      return reg.status === 'registered';
+    });
+  }
+
+  // Resolves with the signed-in user's active registrations (array).
+  function loadActiveRegistrations(opts) {
+    return App.api.get('/event-registrations/my-registrations', null, opts).then(activeOnly);
+  }
+
   function registeredIds(registrations) {
     var ids = {};
-    $.each(registrations || [], function (i, reg) {
-      if (reg.status === 'registered') ids[reg.event_id] = true;
+    $.each(activeOnly(registrations), function (i, reg) {
+      ids[reg.event_id] = true;
     });
     return ids;
   }
 
   // Resolves with {eventId: true} for the signed-in user's active registrations.
   function loadRegisteredIds(opts) {
-    return App.api.get('/event-registrations/my-registrations', null, opts).then(registeredIds);
+    return loadActiveRegistrations(opts).then(registeredIds);
   }
 
   // Toggles registration. Resolves with the new state (true = registered).
@@ -86,6 +97,7 @@
     isPublished: isPublished,
     imageUrl: imageUrl,
     mapUrl: mapUrl,
+    loadActiveRegistrations: loadActiveRegistrations,
     loadRegisteredIds: loadRegisteredIds,
     setRegistered: setRegistered,
   };
