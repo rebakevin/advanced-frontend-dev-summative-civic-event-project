@@ -167,6 +167,12 @@
   .skeleton-card {
     @apply h-[320px] w-full rounded-card;
   }
+  .skeleton-row {
+    @apply flex w-full items-center gap-3;
+  }
+  .skeleton-row .skeleton-line {
+    @apply flex-1;
+  }
 }
 
 @keyframes toast-in {

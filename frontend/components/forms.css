@@ -101,4 +101,11 @@
   @media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
   .form-actions { @apply flex flex-wrap items-center gap-s3; }
   .form-error-summary { @apply bg-red-tint border border-red text-red rounded-lg p-s4 text-15; }
+
+  /* Upload progress: width is set from JS (CSSOM), value exposed via aria-valuenow */
+  .progress { @apply flex items-center gap-s3; }
+  .progress[hidden] { display: none; }
+  .progress-track { flex: 1; height: 10px; border-radius: 999px; background: #C4C6BE; overflow: hidden; }
+  .progress-bar { height: 100%; width: 0; border-radius: 999px; background: #146B28; transition: width 0.15s; }
+  .progress-text { @apply text-sm text-muted font-mono; min-width: 3ch; text-align: right; }
 }
