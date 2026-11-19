@@ -1,0 +1,6 @@
+{
+  "title": "Notifications",
+  "guard": "admin",
+  "sidebar": true,
+  "scripts": ["features/event-common.js", "features/admin-notifications.js"]
+}
