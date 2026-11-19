@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="app-root" content="{{root}}">
+  <title>{{title}} | CivicEvents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{root}}styles.css">
+  <!-- @page-css -->
+  <script defer src="{{root}}vendor/jquery.min.js"></script>
+  <script defer src="{{root}}config.js"></script>
+  <script defer src="{{root}}js/auth.js"></script>
+  <script defer src="{{root}}js/api.js"></script>
+  <script defer src="{{root}}js/guard.js"></script>
+  <!-- @scripts -->
+</head>
+<body class="bg-bg text-ink font-sans" data-guard="{{guard}}" data-page="{{page}}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <!-- @demo-banner -->
+  <!-- @header -->
+  <!-- @admin-sidebar -->
+  <main id="main" tabindex="-1"><!-- @content --></main>
+  <!-- @footer -->
+</body>
+</html>

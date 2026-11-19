@@ -1,0 +1,11 @@
+@import "../components/base.css";
+@import "../components/buttons.css";
+@import "../components/forms.css";
+@import "../components/feedback.css";
+@import "../components/data.css";
+@import "../components/overlays.css";
+@import "../components/media.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
