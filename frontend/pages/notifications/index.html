@@ -1,0 +1,12 @@
+<div class="mx-auto w-full max-w-4xl px-4 py-8">
+  <p id="notifications-back" class="mb-4" hidden><a href="{{root}}notifications/">&larr; Back to notifications</a></p>
+
+  <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+    <h1 id="notifications-title">Notifications</h1>
+    <button id="notifications-mark-all" class="btn btn-secondary" type="button" hidden>Mark all as read</button>
+  </div>
+
+  <!-- Skeleton, empty, error and populated states are rendered here by notifications.js -->
+  <div id="notifications-root" aria-live="polite" aria-busy="true"></div>
+  <nav id="notifications-pagination" class="pagination mt-8" aria-label="Pagination" hidden></nav>
+</div>
