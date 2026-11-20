@@ -1,5 +1,9 @@
 # CivicEvents+
 
+> [!IMPORTANT]
+> **Facilitator: please read [video-demo/rubric-and-backend-differences.md](video-demo/rubric-and-backend-differences.md) before marking.**
+> The provided backend differs from the assignment text and rubric in places, and the frontend follows the backend. Please take those differences into consideration when marking.
+
 ## Prerequisites
 
 - Node.js 18+ and npm: `node --version`
