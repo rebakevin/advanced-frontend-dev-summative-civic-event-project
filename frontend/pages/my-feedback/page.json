@@ -1,0 +1,5 @@
+{
+  "title": "My feedback",
+  "guard": "user",
+  "scripts": ["features/event-common.js", "features/my-feedback.js"]
+}

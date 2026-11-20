@@ -1,3 +1,4 @@
+/* ROLE GUARD: signed-in users only (guard.js sends guests to login). This page shows your own registrations and notifications; the backend scopes the data to the token, so no other user's data is requested. */
 (function ($) {
   window.App = window.App || {};
 
@@ -12,6 +13,9 @@
     var user = App.auth.getUser();
     if (user && user.full_name) $('#dashboard-greeting').text('Welcome back, ' + user.full_name);
     $('#view-all-registrations').attr('href', App.pageUrl('my-registrations'));
+    $('#stat-registered-link').attr('href', App.pageUrl('my-registrations'));
+    $('#stat-feedback-link').attr('href', App.pageUrl('my-feedback'));
+    $('#stat-unread-link').attr('href', App.pageUrl('notifications'));
     $('#view-all-notifications').attr('href', App.pageUrl('notifications'));
 
     function startTime(reg) {
