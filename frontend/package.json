@@ -5,8 +5,8 @@
   "description": "CivicEvents frontend: HTML, Tailwind CSS and jQuery",
   "scripts": {
     "css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
-    "build": "node build-site.js && npm run css",
-    "dev": "node build-site.js --watch & tailwindcss -i ./src/input.css -o ./dist/styles.css --watch"
+    "build": "node build-site && npm run css",
+    "dev": "node build-site --watch & tailwindcss -i ./src/input.css -o ./dist/styles.css --watch"
   },
   "license": "ISC",
   "devDependencies": {
