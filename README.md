@@ -4,7 +4,7 @@
 > **Please refer to [video-demo/rubric-vs-backend.md](video-demo/rubric-vs-backend.md).**
 > The provided backend differs from the assignment rubric in some places. The frontend was built to work with the existing backend. No file in `/backend` was touchded as per the rubric. 
 >
-> **Video walkthrough and notes:** see [video-demo/README.md](video-demo/README.md).
+> **Video demo:** see [video-demo/README.md](video-demo/README.md).
 
 ## Prerequisites
 
