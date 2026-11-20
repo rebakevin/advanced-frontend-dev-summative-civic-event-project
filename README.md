@@ -29,7 +29,7 @@ Values (match `backend/.env`):
 - Password: your Postgres password (psql prompts for it, `DB_PASS` in `backend/.env`)
 
 > [!TIP]
-> These scripts run both the frontend and the backend in one go.
+> I added these scripts to start the whole application (frontend and backend together) in one command and stop running the app in one command.
 > - `./start.sh` to start the whole app
 > - `./stop.sh` to stop the app
 
