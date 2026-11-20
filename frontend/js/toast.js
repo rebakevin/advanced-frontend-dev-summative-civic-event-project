@@ -6,7 +6,7 @@
 
   function getContainer() {
     if (!$container || !$container.length || !$.contains(document.body, $container[0])) {
-      $container = $('<div class="toast-container" aria-live="polite"></div>').appendTo(document.body);
+      $container = $('<div class="toast-container" role="region" aria-label="Notifications" aria-live="polite"></div>').appendTo(document.body);
     }
     return $container;
   }

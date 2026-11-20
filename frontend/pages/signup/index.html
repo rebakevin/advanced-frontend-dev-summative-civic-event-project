@@ -29,6 +29,10 @@
         <label for="confirm_password">Confirm password</label>
         <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" aria-describedby="confirm_password-error" required>
         <p class="field-error" id="confirm_password-error" hidden></p>
+        <label class="check" for="show-password">
+          <input id="show-password" type="checkbox" data-toggle-password="password confirm_password">
+          <span>Show passwords</span>
+        </label>
       </div>
 
       <div class="form-actions">

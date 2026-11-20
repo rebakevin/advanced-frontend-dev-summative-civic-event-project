@@ -122,7 +122,7 @@
       var p = Math.max(0, Math.min(100, Math.round(Number(percent) || 0)));
       wrap.hidden = false;
       bar.setAttribute('aria-valuenow', String(p));
-      bar.style.width = p + '%';
+      $(bar).css('width', p + '%');
       text.textContent = p + '%';
     }
 
@@ -134,7 +134,7 @@
       },
       reset: function () {
         bar.setAttribute('aria-valuenow', '0');
-        bar.style.width = '0%';
+        $(bar).css('width', '0%');
         text.textContent = '0%';
         wrap.hidden = true;
       },

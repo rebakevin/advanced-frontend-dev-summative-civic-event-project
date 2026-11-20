@@ -108,7 +108,18 @@
     });
   }
 
+  // A checkbox with data-toggle-password="<id> <id>" shows or hides those password fields.
+  function initShowPassword() {
+    $('[data-toggle-password]').on('change', function () {
+      var type = this.checked ? 'text' : 'password';
+      $.each($(this).data('togglePassword').split(' '), function (i, id) {
+        $('#' + id).attr('type', type);
+      });
+    });
+  }
+
   $(function () {
+    initShowPassword();
     initSignup();
     initLogin();
     initNotFound();

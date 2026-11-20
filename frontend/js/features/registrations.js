@@ -1,3 +1,4 @@
+/* ROLE GUARD: signed-in users only (guard.js sends guests to login). This page shows your own registrations; the backend scopes the data to the token, so no other user's data is requested. */
 (function ($) {
   window.App = window.App || {};
 

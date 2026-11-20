@@ -26,7 +26,8 @@
 
   function buildState(title, text) {
     var $state = $('<div class="empty-state"></div>');
-    $('<h2></h2>').text(title).appendTo($state);
+    // Detail pages have no static h1: the state heading becomes it so the page keeps exactly one.
+    $(document.querySelector('h1') ? '<h2></h2>' : '<h1></h1>').text(title).appendTo($state);
     if (text) $('<p></p>').text(text).appendTo($state);
     return $state;
   }
