@@ -55,7 +55,7 @@ psql -U postgres -d civic-events-db -h localhost -p 5432 -c "UPDATE users SET ro
 
 ## Demo mode logins
 
-Only work in a mock-mode build (`USE_MOCK=true npm run build`), such as the GitHub Pages site.
+Seeded automatically by `./start.sh`, and always available in a mock-mode build (`USE_MOCK=true npm run build`), such as the GitHub Pages site.
 
 | Email                            | Password   | Role                          |
 |----------------------------------|------------|-------------------------------|
