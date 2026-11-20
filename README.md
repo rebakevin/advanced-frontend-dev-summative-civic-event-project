@@ -1,8 +1,10 @@
 # CivicEvents+
 
 > [!IMPORTANT]
-> **Facilitator: please read [video-demo/rubric-and-backend-differences.md](video-demo/rubric-and-backend-differences.md) before marking.**
-> The provided backend differs from the assignment text and rubric in places, and the frontend follows the backend. Please take those differences into consideration when marking.
+> **Please refer to [video-demo/rubric-vs-backend.md](video-demo/rubric-vs-backend.md).**
+> The provided backend differs from the assignment text and rubric in places. The frontend was built to work with the existing backend. No file in `/backend` was touchded as per the rubric. 
+>
+> **Video walkthrough and notes:** see [video-demo/README.md](video-demo/README.md).
 
 ## Prerequisites
 

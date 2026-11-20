@@ -1,6 +1,6 @@
 .idea
 docs
-CLAUDE.md
+docs/CLAUDE.md
 node_modules
 dist
 .run
