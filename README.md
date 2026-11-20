@@ -5,6 +5,7 @@
 - Node.js 18+ and npm: `node --version`
 - PostgreSQL 15+ running locally: `psql --version`, `pg_isready -h localhost -p 5432`
 - Python 3 (only to serve the built frontend): `python3 --version`
+- Nothing should be running on port 8080 (the frontend) or 3000 (the backend) when you start the app.
 
 ## Set up the database (once)
 
