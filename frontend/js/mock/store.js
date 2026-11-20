@@ -2,7 +2,8 @@
   window.App = window.App || {};
   App.mock = App.mock || {};
 
-  var STATE_KEY = 'civic.mock.v1';
+  // Bump the version when the seed changes, so browsers drop their saved copy of the old seed.
+  var STATE_KEY = 'civic.mock.v2';
   var TABLES = ['users', 'events', 'event_registrations', 'event_feedback', 'announcements', 'promos', 'notifications'];
   // Sample media used when an upload is not stored (see assets/demo/).
   var FALLBACK_BY_FIELD = {
