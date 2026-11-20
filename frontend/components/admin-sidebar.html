@@ -1,5 +1,10 @@
-<aside id="admin-sidebar" class="admin-sidebar">
-  <nav aria-label="Admin">
+<!-- ROLE GUARD: admin only. The sidebar appears only on admin pages (data-sidebar), which guard.js restricts to the admin role. The backend enforces the real permission. -->
+<aside id="admin-sidebar" class="admin-sidebar" aria-label="Admin section">
+  <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar-nav">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <span>Admin menu</span>
+  </button>
+  <nav aria-label="Admin" id="sidebar-nav">
     <a class="sidebar-link" href="{{root}}admin-dashboard/" data-match="admin-dashboard">Dashboard</a>
     <a class="sidebar-link" href="{{root}}admin-users/" data-match="admin-users">Users</a>
     <a class="sidebar-link" href="{{root}}admin-notifications/" data-match="admin-notifications">Notifications</a>

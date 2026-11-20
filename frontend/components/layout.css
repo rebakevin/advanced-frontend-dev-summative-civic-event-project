@@ -34,10 +34,7 @@
     gap: 8px 12px;
   }
   .header-logo { @apply inline-flex items-center text-white no-underline; gap: 10px; min-height: 44px; margin-right: auto; }
-  .header-logo-mark {
-    @apply inline-flex items-center justify-center bg-orange text-white font-display rounded-pill;
-    width: 36px; height: 36px; font-weight: 700;
-  }
+  .header-logo-mark { @apply block shrink-0; width: 36px; height: 36px; object-fit: contain; }
   .header-logo-text { @apply font-display; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; }
 
   .header-actions { @apply flex items-center; gap: 8px; order: 2; }
@@ -92,7 +89,12 @@
 
   /* Admin sidebar and page grid */
   .admin-sidebar { @apply bg-surface border-b border-line; }
-  .admin-sidebar nav { @apply flex overflow-x-auto; gap: 8px; padding: 8px 16px; }
+  .sidebar-toggle {
+    @apply flex w-full items-center text-ink bg-transparent border-0 cursor-pointer;
+    min-height: 44px; padding: 8px 16px; gap: 10px; font-weight: 600; font-size: 0.9375rem;
+  }
+  .admin-sidebar nav { @apply hidden flex-col; gap: 4px; padding: 0 16px 12px; }
+  .admin-sidebar nav.is-open { @apply flex; }
   .sidebar-link {
     @apply inline-flex items-center flex-shrink-0 text-ink no-underline rounded-pill;
     min-height: 44px; padding: 8px 16px; font-weight: 600; font-size: 0.9375rem;
@@ -105,14 +107,15 @@
     body[data-sidebar="true"] {
       @apply grid;
       grid-template-columns: 240px minmax(0, 1fr);
-      grid-template-rows: auto auto auto 1fr auto;
+      grid-template-rows: auto auto 1fr auto;
     }
-    body[data-sidebar="true"] > .demo-banner,
-    body[data-sidebar="true"] > .site-header,
-    body[data-sidebar="true"] > .site-footer { grid-column: 1 / -1; }
-    body[data-sidebar="true"] > .admin-sidebar { grid-column: 1; @apply border-b-0 border-r border-line; }
-    body[data-sidebar="true"] > main { grid-column: 2; min-width: 0; }
-    .admin-sidebar nav { @apply flex-col overflow-visible; padding: 24px 16px; }
+    body[data-sidebar="true"] > .demo-banner { grid-column: 1 / -1; grid-row: 1; }
+    body[data-sidebar="true"] > .site-header { grid-column: 1 / -1; grid-row: 2; }
+    body[data-sidebar="true"] > .site-footer { grid-column: 1 / -1; grid-row: 4; margin-top: 0; }
+    body[data-sidebar="true"] > .admin-sidebar { grid-column: 1; grid-row: 3; @apply border-b-0 border-r border-line; }
+    body[data-sidebar="true"] > main { grid-column: 2; grid-row: 3; min-width: 0; }
+    .sidebar-toggle { @apply hidden; }
+    .admin-sidebar nav { @apply flex flex-col; padding: 24px 16px; }
     .sidebar-link { @apply flex; }
   }
 

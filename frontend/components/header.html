@@ -1,7 +1,7 @@
 <header class="site-header dark">
   <div class="site-header-inner">
     <a class="header-logo" href="{{root}}events/" aria-label="CivicEvents home">
-      <span class="header-logo-mark" aria-hidden="true">C</span>
+      <img class="header-logo-mark" src="{{root}}assets/logo.png" alt="" width="36" height="36">
       <span class="header-logo-text">CivicEvents</span>
     </a>
 
@@ -42,6 +42,7 @@
       </form>
 
       <nav class="header-nav" id="primary-nav" aria-label="Main">
+        <a class="header-link" href="{{root}}my-dashboard/" data-role="user" data-match="my-dashboard">Dashboard</a>
         <a class="header-link" href="{{root}}events/" data-match="events event-detail">Events</a>
         <a class="header-link" href="{{root}}announcements/" data-match="announcements announcement-detail">Announcements</a>
         <a class="header-link" href="{{root}}promos/" data-match="promos">Promos</a>
@@ -53,8 +54,8 @@
   </div>
 </header>
 
-<div class="drawer-backdrop" id="drawer-backdrop"></div>
-<aside class="drawer" id="notif-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+<div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+<aside class="drawer" id="notif-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" tabindex="-1">
   <div class="drawer-header">
     <h2 class="drawer-title" id="drawer-title">Notifications</h2>
     <button type="button" class="drawer-close" id="drawer-close" aria-label="Close notifications">

@@ -22,6 +22,16 @@
     return true;
   }
 
+  // Regular users land on their dashboard, so the logo and a Dashboard tab lead back to it.
+  // Admins have their own Dashboard link, so the user-only tab is removed for them.
+  function initUserHome() {
+    if (App.auth.hasRole('admin')) {
+      $('#primary-nav [data-role="user"]').remove();
+      return;
+    }
+    $('.header-logo').attr('href', App.pageUrl('my-dashboard'));
+  }
+
   function initUserName() {
     var $name = $('#header-user-name');
     if (!$name.length) return;
@@ -95,6 +105,16 @@
     });
   }
 
+  function initSidebarToggle() {
+    var $toggle = $('#sidebar-toggle');
+    var $nav = $('#sidebar-nav');
+    if (!$toggle.length || !$nav.length) return;
+    $toggle.on('click', function () {
+      var open = $nav.toggleClass('is-open').hasClass('is-open');
+      $toggle.attr('aria-expanded', String(open));
+    });
+  }
+
   function initSearch() {
     var $form = $('#header-search');
     if (!$form.length) return;
@@ -120,6 +140,8 @@
 
   function initBell() {
     $('#notif-bell').on('click', function () {
+      // The drawer is a spec requirement, but it would only duplicate the full notifications page.
+      if ($('body').data('page') === 'notifications') return;
       App.drawer.toggle();
     });
   }
@@ -135,9 +157,11 @@
     initBanner();
     initCurrentPage();
     if (initGuestState()) return;
+    initUserHome();
     initUserName();
     initDropdown();
     initMobileNav();
+    initSidebarToggle();
     initSearch();
     initLogout();
     initBell();

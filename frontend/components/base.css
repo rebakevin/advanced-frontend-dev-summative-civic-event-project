@@ -5,14 +5,16 @@
  */
 @layer base {
   html { -webkit-text-size-adjust: 100%; }
-  body { @apply bg-bg text-ink font-sans text-base; margin: 0; }
+  body { @apply bg-bg text-ink font-sans text-base; margin: 0; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+  body > main { flex: 1 0 auto; }
   h1, h2, h3, h4 { @apply font-display text-ink; margin: 0; font-weight: 600; }
   h1 { @apply text-4xl uppercase; font-weight: 500; letter-spacing: -0.025em; }
   h2 { @apply text-2xl; letter-spacing: -0.01em; }
   h3 { @apply text-xl; letter-spacing: -0.01em; }
   p { margin: 0; }
   button, input, select, textarea { font: inherit; color: inherit; }
-  img, video { max-width: 100%; }
+  img, video, audio, canvas { max-width: 100%; }
+  main { overflow-wrap: break-word; min-width: 0; }
   [hidden] { display: none !important; }
 }
 
