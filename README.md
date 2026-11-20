@@ -6,6 +6,8 @@
 >
 > **Video demo:** see [video-demo/README.md](video-demo/README.md).
 
+I also added a mock of the UI [here](https://rebakevin.github.io/advanced-frontend-dev-summative-civic-event-project/login/) to quickly see what they UI looks like before even cloning locally.
+
 ## Prerequisites
 
 - Node.js 18+ and npm: `node --version`
