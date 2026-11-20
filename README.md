@@ -21,6 +21,11 @@ Values (match `backend/.env`):
 - Database: `civic-events-db`
 - Password: your Postgres password (psql prompts for it, `DB_PASS` in `backend/.env`)
 
+> [!TIP]
+> These scripts run both the frontend and the backend in one go.
+> - `./start.sh` to start the whole app
+> - `./stop.sh` to stop the app
+
 ## Run the backend
 
 ```
