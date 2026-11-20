@@ -51,6 +51,7 @@
     }
 
     if (status === 0 || status >= 500) {
+      if (settings.ownServerError) return;
       internal.show({
         type: 'error',
         message: err.message,

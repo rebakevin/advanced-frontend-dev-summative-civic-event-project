@@ -35,7 +35,7 @@
       confirmLabel: 'Delete',
       danger: true,
     }).done(function () {
-      App.ui.withLoading($btn, App.api.del('/events/' + event.id, { inline: true }))
+      App.ui.withLoading($btn, App.events.deleteEvent(event.id))
         .done(function () {
           App.flash.set('Event deleted.', 'success');
           window.location.href = App.pageUrl('events');

@@ -64,7 +64,7 @@
         confirmLabel: 'Delete',
         danger: true,
       }).done(function () {
-        App.ui.withLoading($del, App.api.del('/events/' + ev.id, { inline: true }))
+        App.ui.withLoading($del, App.events.deleteEvent(ev.id))
           .done(function () {
             ctx.all = $.grep(ctx.all, function (e) { return e.id !== ev.id; });
             App.toast.success('Event deleted.');

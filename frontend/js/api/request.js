@@ -12,6 +12,8 @@
       // Custom flags travel in the settings so the global handler can read them.
       inline: !!opts.inline,
       silent: !!opts.silent,
+      // The caller words 5xx / network failures itself: no global toast or Retry.
+      ownServerError: !!opts.ownServerError,
       onRetrySuccess: opts.onRetrySuccess,
     };
     if (data !== undefined && data !== null) {

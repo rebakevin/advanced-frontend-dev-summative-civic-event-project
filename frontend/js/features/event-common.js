@@ -92,7 +92,25 @@
     return dfd.promise();
   }
 
+  // The backend has no ON DELETE CASCADE on event_registrations, so deleting an event
+  // that has registrations fails with a 500. Say so instead of the generic server error.
+  function deleteEvent(eventId) {
+    var dfd = $.Deferred();
+    App.api.del('/events/' + eventId, { inline: true, ownServerError: true })
+      .done(function () {
+        dfd.resolve();
+      })
+      .fail(function (err) {
+        if (err.status >= 500) {
+          err = $.extend({}, err, { message: "This event can't be deleted, most likely because people have registered for it." });
+        }
+        dfd.reject(err);
+      });
+    return dfd.promise();
+  }
+
   App.events = {
+    deleteEvent: deleteEvent,
     formatDate: formatDate,
     formatTime: formatTime,
     formatDateTime: formatDateTime,
