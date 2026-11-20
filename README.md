@@ -1,1 +1,62 @@
-# CivicEvent+ Project
+# CivicEvents+
+
+## Prerequisites
+
+- Node.js 18+ and npm: `node --version`
+- PostgreSQL 15+ running locally: `psql --version`, `pg_isready -h localhost -p 5432`
+- Python 3 (only to serve the built frontend): `python3 --version`
+
+## Set up the database (once)
+
+```
+createdb -U postgres -h localhost -p 5432 "civic-events-db"
+psql -U postgres -d civic-events-db -h localhost -p 5432 -f backend/migrations/001_create_tables.sql
+```
+
+Values (match `backend/.env`):
+
+- User: `postgres`
+- Host: `localhost`
+- Port: `5432`
+- Database: `civic-events-db`
+- Password: your Postgres password (psql prompts for it, `DB_PASS` in `backend/.env`)
+
+## Run the backend
+
+```
+cd backend
+npm install
+npm run dev
+```
+
+## Run the frontend
+
+```
+cd frontend
+npm install
+npm run build
+python3 -m http.server 8080 --directory dist
+```
+
+Open http://localhost:8080
+
+## Create an admin (real backend)
+
+Sign up in the app, then promote the account:
+
+```
+psql -U postgres -d civic-events-db -h localhost -p 5432 -c "UPDATE users SET role = 'admin' WHERE email = 'you@example.com';"
+```
+
+## Demo mode logins
+
+Only work in a mock-mode build (`USE_MOCK=true npm run build`), such as the GitHub Pages site.
+
+| Email                            | Password   | Role                          |
+|----------------------------------|------------|-------------------------------|
+| admin@civicevents.test           | Admin#1234 | admin                         |
+| user@civicevents.test            | User#1234  | user                          |
+| amina.okafor@civicevents.test    | User#1234  | user                          |
+| liam.dupont@civicevents.test     | User#1234  | user                          |
+| sofia.mensah@civicevents.test    | User#1234  | user                          |
+| daniel.karekezi@civicevents.test | User#1234  | user (disabled, can't log in) |
