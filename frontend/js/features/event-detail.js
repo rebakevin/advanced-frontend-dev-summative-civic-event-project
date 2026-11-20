@@ -101,7 +101,8 @@
     $('<p class="whitespace-pre-line"></p>').text(event.description || '').appendTo($body);
 
     var $actions = $('<div class="flex flex-wrap items-center gap-3"></div>').appendTo($body);
-    $actions.append(buildRegisterButton(event, registered));
+    /* ROLE GUARD: admins manage events, they do not attend them, so they get no Register button. */
+    if (!App.auth.hasRole('admin')) $actions.append(buildRegisterButton(event, registered));
 
     /* ROLE GUARD: Edit and Delete are for admins only, because only admins may change
        or remove events. They carry data-role="admin", so the control guard removes

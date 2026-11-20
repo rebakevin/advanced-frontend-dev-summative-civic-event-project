@@ -94,7 +94,9 @@
         .attr({ href: App.pageUrl('event-detail', { id: ev.id }), 'aria-label': 'View ' + ev.title })
         .text('View').appendTo($actions);
 
-      var $reg = $('<button class="btn btn-sm btn-primary" type="button"></button>').appendTo($actions);
+      /* ROLE GUARD: admins manage events, they do not attend them, so they get no Register button. */
+      var $reg = $('<button class="btn btn-sm btn-primary" type="button"></button>');
+      if (!isAdmin()) $reg.appendTo($actions);
       function paintReg() {
         var on = !!registered[ev.id];
         $reg.text(on ? 'Cancel registration' : 'Register')
@@ -177,7 +179,11 @@
       var regs = App.events.loadRegisteredIds({ inline: true }).then(null, function () {
         return $.Deferred().resolve({}).promise();
       });
-      $.when(App.api.get('/events', null, { inline: true }), regs)
+      // The wrapper resolves with (data, body); keep only the data so $.when passes it through.
+      var list = App.api.get('/events', null, { inline: true }).then(function (data) {
+        return data;
+      });
+      $.when(list, regs)
         .done(function (events, ids) {
           all = $.isArray(events) ? events : [];
           registered = ids || {};

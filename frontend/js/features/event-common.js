@@ -66,6 +66,8 @@
   // Toggles registration. Resolves with the new state (true = registered).
   // Cancelled rows still exist in the backend, so register after cancel answers 409.
   function setRegistered(eventId, register) {
+    // Admins cannot register; the UI hides the buttons, this is the backstop.
+    if (register && App.auth.hasRole('admin')) return $.Deferred().reject({ status: 403, message: 'Admins cannot register for events.' }).promise();
     var path = register ? '/event-registrations/register' : '/event-registrations/cancel';
     var dfd = $.Deferred();
     App.api.post(path, { event_id: eventId }, { inline: true })
