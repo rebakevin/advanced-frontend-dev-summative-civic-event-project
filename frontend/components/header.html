@@ -42,14 +42,13 @@
       </form>
 
       <nav class="header-nav" id="primary-nav" aria-label="Main">
+        <!-- ROLE GUARD: each role gets one Dashboard link, first in the nav. guard.js removes the one that does not apply. The backend enforces the real permission. -->
         <a class="header-link" href="{{root}}my-dashboard/" data-role="user" data-match="my-dashboard">Dashboard</a>
+        <a class="header-link" href="{{root}}admin-dashboard/" data-role="admin" data-match="admin-dashboard admin-users admin-notifications">Dashboard</a>
         <a class="header-link" href="{{root}}events/" data-match="events event-detail">Events</a>
         <a class="header-link" href="{{root}}announcements/" data-match="announcements announcement-detail">Announcements</a>
         <a class="header-link" href="{{root}}promos/" data-match="promos">Promos</a>
-        <!-- ROLE GUARD: the two links below are for admins only. guard.js removes them from the DOM for everyone else. The backend enforces the real permission. -->
-        <a class="header-link" href="{{root}}admin-dashboard/" data-role="admin" data-match="admin-dashboard admin-users admin-notifications">Admin</a>
-        <a class="header-link" href="{{root}}admin-dashboard/" data-role="admin" data-match="">Dashboard</a>
-      </nav>
+              </nav>
     </div>
   </div>
 </header>
